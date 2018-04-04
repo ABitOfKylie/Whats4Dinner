@@ -112,6 +112,10 @@ a {
 	background-color: #ffffff;
 }
 
+img{
+/*	max-width: auto;
+*/	max-height: 50px
+}
 /* =================================
   Media Queries
 ==================================== */

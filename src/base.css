@@ -3,7 +3,7 @@
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: sans-serif;
 	margin: 0;
 }
 
@@ -47,7 +47,7 @@ a {
 .main-nav a {
 	font-size: .95em;
 	text-transform: uppercase;
-	color: #ffffff;
+	color: red;
 }
 
 .main-nav a:hover {
@@ -112,6 +112,35 @@ a {
 	background-color: #ffffff;
 }
 
+/**** card component styling ****/
+.ui.move.reveal {
+  width: 290px;
+  white-space: normal;
+}
+
+.ui.card {
+  height: 620px;
+}
+
+.ui.labeled.icon.menu .item{
+  min-width: 33.3333%;
+  max-width: 33.3333%;
+  font-size: 0.8em;
+  padding: 6px 2px;
+}
+
+.mealImg{
+	max-height: 200px
+}
+.ui.pointing.menu {
+  cursor: pointer;
+}
+
+.ui.tab {
+  height: 320px;
+  overflow-y: auto;
+}
+/*overflow-y property to auto in order to show a scrollbar when the list gets too long */
 /* =================================
   Media Queries
 ==================================== */
