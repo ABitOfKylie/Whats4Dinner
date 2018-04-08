@@ -1,11 +1,11 @@
-import React from 'react';
-import { Menu, Button, Container, Card, Header, Segment, Image, Popup, Icon, Label, Grid, Dropdown, Input, Statistic } from 'semantic-ui-react';
+import React, {Component} from 'react';
+import { Menu, Button, Container, Card, Header, Segment, Image, Icon, Label, Grid, Dropdown, Input, Statistic } from 'semantic-ui-react';
 
 var dinners = [
   {
     meal:"Pizza",
     ethnicity:"Italian",
-    prepTime:"25 min",
+    prepTime: 25,
     description:"A circular platform covered with a tangy tomato sauce, smothered in cheese.",
     image:"",
     ordered:false
@@ -13,7 +13,7 @@ var dinners = [
   {
     meal:"Penne Arrabica",
     ethnicity:"Italian",
-    prepTime:"35 min",
+    prepTime: 35,
     description:"Penne pasta with spicy tomato sauce.",
     image:"",
     ordered:false
@@ -21,7 +21,7 @@ var dinners = [
   {
     meal:"Lasagna",
     ethnicity:"Italian",
-    prepTime:"45 min",
+    prepTime: 45,
     description:"Meat and noodles covered with a tangy tomato sauce, smothered in cheese.",
     image:"",
     ordered:false
@@ -29,15 +29,15 @@ var dinners = [
   {
     meal:"Burritos",
     ethnicity:"Mexican",
-    prepTime:"35 min",
-    description:"Rolled up beans, cheese and gunk.",
+    prepTime: 35,
+    description: "Rolled up beans, cheese and gunk.",
     image:"",
     ordered:false
   },
   {
     meal:"Chicken Mole",
     ethnicity:"Mexican",
-    prepTime:"75 min",
+    prepTime: 75,
     description:"Mexican chocolate adds an intriguing complexity to the smoky, savory sauce. Stir in some cooked, shredded chicken and you've got a whole new go-to chili.",
     image:"",
     ordered:false
@@ -45,7 +45,7 @@ var dinners = [
   {
     meal:"Fried Chicken",
     ethnicity:"American",
-    prepTime:"55 min",
+    prepTime: 55,
     description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
     image:"",
     ordered:false
@@ -53,7 +53,7 @@ var dinners = [
   {
     meal:"Fried Chicken 2",
     ethnicity:"American",
-    prepTime:"55 min",
+    prepTime: 55,
     description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
     image:"",
     ordered:false
@@ -61,15 +61,72 @@ var dinners = [
 ];
 
 
-const StaticComponents = (props) => {
-  return (
-    <div>
-      <Banner />
-      <InfoHeader />
-      <CardList />
-      <Footer />
-    </div>
-  );
+class StaticComponents extends Component {
+  state = {
+    currentDinner: "Chicken Parmesan",
+    currentChoices: null,
+    prepTime: 22,
+    randomPick:"",
+    counter: 1,
+    dinners
+  };
+
+  handleKeyPress = (e) => {
+    if (e.charCode === 32 || e.charCode === 13) {
+      // Prevent the default action to stop scrolling when space is pressed
+      e.preventDefault()
+      this.updateLog('Button received click with keyboard')
+    }
+  }
+
+  activateRandomPick = () => {
+    var randomPick = dinners[Math.floor(Math.random() * dinners.length)];
+    console.log(randomPick);
+    this.setState({randomPick:randomPick});
+  }
+
+  handleClick = () => {
+    this.setState((prevState) => ({
+      counter:prevState.counter + 1
+
+    })    
+  )};
+
+    handleAddDinner(dinner) {
+    this.setState({dinners: [...this.state.dinners, dinner]});
+  }
+
+  handleRemoveDinner(index) {
+    this.setState({
+      dinners: this.state.dinners.filter(function (e, i) {
+        return i !== index;
+      })
+    });
+  }
+
+
+
+  render(){
+    const { currentDinner, currentChoices, prepTime, randomPick, counter, dinners } = this.state;
+    return (
+      <div>
+        <Banner />
+        <InfoHeader
+          currentDinner={currentDinner}
+          currentChoices={currentChoices}
+          prepTime={prepTime}
+          randomPick={randomPick}
+          counter={this.state.counter}
+          updateState = {this.updateState}
+
+        />
+        <Container>
+          <CardList />
+        </Container>
+        <Footer />
+      </div>
+    );
+  }
 }
 
 const Banner = () => {
@@ -81,50 +138,68 @@ const Banner = () => {
     </div>
   );
 }
-const InfoHeader = () => {
+const InfoHeader = (props) => {
   return (
   <div className="InfoHeader">
       <Segment clearing>
         <Header as = 'h3' floated="left">
           <Statistic>
             <Statistic.Value>
-              <Icon name="food" size="tiny"/>
-                33
+              <Icon name="food" size="tiny"/>            
+              <CurrentChoices
+                currentChoices = {props.currentChoices} 
+              />            
             </Statistic.Value>
             <Statistic.Label>Dinner Choices</Statistic.Label>
           </Statistic>
         </Header> 
          <Header as = "h2" floated="right">       
               <label>
-              Dinner being prepared:
-              current dinner = props.currentDinner
+                Dinner being prepared:
+                <span>  </span>                
+                {props.currentDinner}              
+              </label>
               <br/>
+              <label>
               <i className = "hourglass half icon"></i>
-                  Prep Time Remaining:
-                  <Label.Detail>10:46 (coded) </Label.Detail>
-
+                  Preparation Time:
+                  <span>  </span> 
+                  <PrepTime
+                    prepTime = {props.prepTime}
+                  />
+                  <span> minutes</span>
               </label>
           </Header>
        </Segment>
-        <Grid columns = { 3 } doubling >
+        <Grid columns = { 5 } doubling >
           <Grid.Column >
             <Menu secondary pointing >
               <Menu.Item >
-              <Button color="blue" > Random Pick < /Button> 
+              <Button> 
+                 Random HardCode
+              </Button>
               </Menu.Item>
-
+              <Menu.Item>
+                <TestButton
+                  circular
+                  icon labelPosition='left' className ="home"
+                  size='large'
+                  counter={props.counter}
+                />
+              </Menu.Item>
+              <Menu.Item>
+                <Button icon labelPosition='left'>
+                  <Icon name='utensils' />
+                  View All
+                </Button>
+              </Menu.Item>
               <Menu.Item >
-                <Dropdown text = 'Choose Meal'
+                <Dropdown text = 'Ethnic Choice'
                   icon = 'flag'
                   floating labeled button className = 'icon'>
                   <Dropdown.Menu >
                   <Dropdown.Header content = 'Search for a particular Meal' / >
-                    <Input icon = 'search'
-                    iconPosition = 'left'
-                    name = 'search' / >
-                    <Dropdown.Header icon = 'flag'
-                    content = 'Filter by ethnicity'/>
-                  <Dropdown.Divider />
+
                     <Dropdown.Item label = { { flag: 'mx' } } text = 'Mexican' value="Mexican"/ >
                     <Dropdown.Item label = { { color: 'blue', empty: true, circular: true } } text = 'American' / >
                     <Dropdown.Item label = { { color: 'green', empty: true, circular: true } } text = 'Italian' / >
@@ -147,18 +222,55 @@ const InfoHeader = () => {
   );
 }
 
-const dinnerChoices =() => {
+const CurrentChoices =() => {
   return(
-    33
+    dinners.length
   );
 }
 
-const prepTimeLeft = () => {
+const CurrentDinner = () => {
   return(
-    <Label.Detail>10:46 (coded) </Label.Detail>
+    <span>10:46 (coded) </span>
+  );
+}
+const PrepTime = () => {
+  return(
+    <Label.Detail>
+      22 (activated by user choice) 
+    </Label.Detail>
   );
 }
 
+const RandomPick = (props) => {
+  return(
+    <Button.Group labeled icon
+      labelPosition = 'left' 
+      icon name = 'plus circle'
+      content = "Random Pick"
+      color = 'blue'
+      onClick={() => {
+        props.activateRandomPick()
+      }}
+    / >
+  );
+} 
+
+const TestButton = (props) => {
+  return(
+    <button 
+    secondary="true"
+    color="orange"
+    content = "{this.state.counter}"
+    onClick={()=>{
+      props.handleClick
+    }}
+    />
+  );
+}
+
+
+
+    
 const CardList = () => {
   return (
     <Card.Group itemsPerRow={4}>
@@ -214,5 +326,7 @@ const Footer = () => {
     </footer>
   );
 }
+
+
 
 export default StaticComponents;

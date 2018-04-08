@@ -3,7 +3,7 @@ import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
 const CardBase = () => (
   <Card>
-    image="https://lh6.ggpht.com/IhJmL3aCUrtPsgXby8TefqIwwP4_VUGXaAZVn3-SIwlGr6u3w1A3DROfMMwDqkxZQg=w300"
+    <Image src='/images/dinnerLogo.jpeg' />
     <Card.Content>
       <Card.Header>
         Dinner
