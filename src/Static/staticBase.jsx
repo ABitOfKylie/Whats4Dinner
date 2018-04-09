@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Menu, Button, Container, Card, Header, Segment, Image, Icon, Label, Grid, Dropdown, Input, Statistic } from 'semantic-ui-react';
+import { Menu, Button, Container, Card, Header, Segment, Image, Icon, Label, Grid, Dropdown, Input, Statistic, Flag} from 'semantic-ui-react';
 
 var dinners = [
   {
@@ -200,7 +200,7 @@ const InfoHeader = (props) => {
                   <Dropdown.Menu >
                   <Dropdown.Header content = 'Search for a particular Meal' / >
 
-                    <Dropdown.Item label = { { flag: 'mx' } } text = 'Mexican' value="Mexican"/ >
+                    <Dropdown.Item label = { { name: 'China', countryCode: 'cn' } } text = 'Mexican' value="Mexican"/ >
                     <Dropdown.Item label = { { color: 'blue', empty: true, circular: true } } text = 'American' / >
                     <Dropdown.Item label = { { color: 'green', empty: true, circular: true } } text = 'Italian' / >
                     <Dropdown.Item label = { { color: 'yellow', empty: true, circular: true } } text = 'Indian' / >

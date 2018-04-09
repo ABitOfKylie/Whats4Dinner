@@ -85,6 +85,9 @@ const FormInput extends Component (
             <label htmlFor="inputDinnerprepTime" className="col-sm-2" control-label>Preparation Time</label>
             <div className="col-sm-10">
               <input
+    label={{ basic: true, content: 'minutes' }}
+    labelPosition='right'
+    
                   name="prepTime" 
                   type="text" 
                   className="form-control" 
