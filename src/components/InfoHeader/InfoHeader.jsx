@@ -63,9 +63,7 @@ const Banner = (props) => {
           </h1>
         </Segment>
         <Segment>
-          <Stat />
-						currentChoices={props.currentChoices}
-						dinners={props.dinners}        
+					<Stat />				
 				</Segment>
       </Segment.Group>
     </div>

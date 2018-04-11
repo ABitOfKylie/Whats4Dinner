@@ -11,88 +11,28 @@ p {
 	font-family: 'Open Sans', sans-serif;
 }
 
-ul {
-	list-style: none;
-  margin: 0;
-  padding: 0;
+
+/* ---- Card ---- */
+
+.ui.container{
+	margin-top:10px;
 }
 
-a {
-	text-decoration: none;
+.ui.card {
+  height: 420px;
 }
 
-/* ---- Navigation ---- */
-
-.name {
-	font-size: 1.35em;
-	margin: 0;
-	color: #61dafb;
-}
-
-.main-nav {
-	margin-top: 5px;
-}
-
-.name a,
-.main-nav a {
-	display: block;
-	padding: 10px 15px;
-  text-align: center;
-}
-
-.name a {
-	color: #61dafb;
-}
-
-.main-nav a {
-	font-size: .95em;
-	text-transform: uppercase;
-	color: #ffffff;
-}
-
-.main-nav a:hover {
-	color: #61dafb;
-}
-
-/* ---- Layout Containers ---- */
-
-.main-header {
-	padding-top: .5em;
-	padding-bottom: .5em;
-	background-color: #20232a;
-}
-
-.banner,
-.main-footer {
-	text-align: center;
-}
-
-.banner {
-	color: #fff;
-	background: #292C34;
-	padding: 3.2em 0;
-	margin-bottom: 48px;
-}
-
-.col {
-	padding: 1em;
-	text-align: center;
-	background: #f7f7f7;
-	border-radius: .35em;
-	margin: 0 .5em .8em;
-}
-
-.main-footer {
-	background: #292C34;
-	color: #fff;
-	padding: 2em 0;
-	margin-top: 30px;
+.ui.buttons.bottomLine{
+  min-width: 33.3333%;
+  max-width: 33.3333%;
+  font-size: 0.8em;
+  padding: 6px 2px;
 }
 
 /* ---- Page Elements ---- */
 
 .headline {
-	color: #61dafb;
+	color: darkred;
 	margin-bottom: 0;
 }
 
@@ -112,10 +52,7 @@ a {
 	background-color: #ffffff;
 }
 
-img{
-/*	max-width: auto;
-*/	max-height: 50px
-}
+
 /* =================================
   Media Queries
 ==================================== */
