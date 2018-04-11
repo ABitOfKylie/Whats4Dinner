@@ -1,0 +1,115 @@
+note - inspector doesn't like active === & 
+'this' onClick keys 
+
+const EthnicChoices = [
+    {
+      key:"mx",
+      value:"mx",
+      flag:"mx",
+      text:"Mexican",
+      active:{activeItem === "Mexican"},
+      onClick:{this.handleItemClick}
+    },
+    {
+      key:"us",
+      value:"us",
+      flag:"us",
+      text:"American",
+      active:{activeItem === "American"},
+      onClick:{this.handleItemClick}
+    },
+    {
+      key:"it",
+      value:"it",
+      flag:"it",
+      text:"Italian",
+      active:{activeItem === "Italian"},
+      onClick:{this.handleItemClick}
+    },
+    {
+      key:"in",
+      value:"in",
+      flag:"in",
+      text:"Indian",
+      active:{activeItem === "Indian"},
+      onClick:{this.handleItemClick}
+    },
+    {
+      key:"cn",
+      value:"cn",
+      flag:"cn",
+      text:"Chinese",
+      active:{activeItem === "Chinese"},
+      onClick:{this.handleItemClick}
+    },
+
+]
+
+const flagRenderer = item =>
+  <Flag name={item.countryCode} />
+
+
+*******According to Dropdown Menu ********
+const EthnicChoice = (props) => {
+  return(
+
+      <Menu.Item>
+        <Dropdown text = "Ethnic Choice" icon = "flag"
+          floating labeled button className = "icon">
+          <Dropdown.Menu>
+            <Dropdown.Header>
+              <Dropdown.Item
+                label = { { name: 'China', countryCode: 'cn' } } text = 'Mexican' value="Mexican">
+              </Dropdown.Item>
+              <Dropdown.Item
+                label = { { color: 'blue', empty: true, circular: true } } text = 'American'>
+              </Dropdown.Item>
+              <Dropdown.Item
+                label = { { color: 'orange', empty: true, circular: true } } text = 'Asian'>
+              </Dropdown.Item>
+              <Dropdown.Item
+                label = { { color: 'red', empty: true, circular: true } } text = 'Italian'>
+              </Dropdown.Item>
+              <Dropdown.Item
+                label = { { name: 'China', countryCode: 'cn' } } text = 'Chinese' value="Chinese">
+              </Dropdown.Item>
+            </Dropdown.Header>
+          </Dropdown.Menu>
+        </Dropdown>
+      </Menu.Item>
+
+    );
+}
+
+*****According to Modules/Dropdown/search Selection*****
+const EthnicSelect =(props) => {
+  return(
+    <Select placeholder="Choose Type"
+      options = {EthnicChoices}
+    />
+    );
+}
+
+*****Modules Dropdown Usage - Select on Navigation ***
+utilizes state={
+          default:"",
+          "false":""
+          }
+
+*****Yet another which I can't find again is*****
+
+handleItemClick = (e {name}) =>
+  this.setState({activeItem:name})
+
+render(
+  const {activeItem} = this.this.state
+  return(
+    <Menu>
+      <Menu.Item name="browse" 
+                active={activeItem === "browse"}
+                onClick={this.handleItemClick}>
+        Browse
+      </Menu.Item>
+    </Menu>
+    ) 
+  )

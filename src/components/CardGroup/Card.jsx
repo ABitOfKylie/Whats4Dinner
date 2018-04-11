@@ -18,7 +18,7 @@ const CardBase = () => (
     </Card.Content>
     <Card.Content extra>
       <a>
-        <Icon name='clock outline' />
+        <Icon name='hourglass half' />
         Prep Time: 22 min
       </a>
       <Button floated='right'>Order Now</Button>

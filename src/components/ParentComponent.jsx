@@ -63,12 +63,22 @@ var dinners = [
 ];
 
 class ParentComponent extends Component {
-  // this.state = dinners
+  state = {
+    currentDinner: "Chicken Parmesan",
+    currentChoices: null,
+    prepTime: 22,
+    randomPick:"",
+    counter: 1,
+    dinners: dinners
+  };
+
   render(){
     return(
       <div>
-        <Navbar/>
-        <CardBase/>
+        <InfoHeader/>
+        <Container>
+          <CardBase/>
+        </Container>
       </div>
     );
   }
