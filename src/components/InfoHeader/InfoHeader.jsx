@@ -35,20 +35,25 @@ const EthnicChoices = [
 
 ]
 
-const flagRenderer = item =>
-	<Flag name={item.countryCode} />
-
-
-const InfoHeader = () => { 
-	return(
+const InfoHeader =(props) =>{
+		return(
   <div className="InfoHeader">
     <Segment.Group raised>
-      <Banner />
-      <Navbar />
+      <Banner 
+      	dinners = {this.dinners}
+      	currentChoices = {this.currentChoices}
+      />
+      <Navbar
+      	numberHolder = {this.numberHolder}
+      	randomMeal ={this.randomMeal}
+      	chooseRandom = {this.chooseRandom}
+      	GenerateRandomNumber = {this.GenerateRandomNumber}
+      />
     </Segment.Group>
-</div>
+	</div>
 	);
-}
+	}
+
 
 const Banner = (props) => {
   return (
@@ -97,10 +102,25 @@ const Navbar = (props) => {
           <Grid.Column >
             <Menu secondary pointing >
               <Menu.Item >
-              <Button> 
-                 Random Pick
-              </Button>
+	             	<Button onClick={this.chooseRandom}>
+	              	Random Pick
+	              </Button>
               </Menu.Item>
+              <Menu.Item>
+	  				<h4>
+	  					
+              randomMeal = {props.randomMeal} 
+              
+            </h4> 
+	  					</Menu.Item>
+              <Menu.Item>
+              	<Button onClick={this.GenerateRandomNumber}>
+	  							Generate#
+	  						</Button>
+	  					</Menu.Item>
+	  					<Menu.Item>
+	  							<h4>numberHolder{this.numberHolder}</h4>
+	  					</Menu.Item>              
               <Menu.Item>
                 <Button icon labelPosition='left'>
                   <Icon name='food' />
@@ -109,7 +129,7 @@ const Navbar = (props) => {
               </Menu.Item>
               	<EthnicChoice />
               <Menu.Item >
-                <Button icon labelPosition = 'left' >
+                <Button onClick={this.addNewDinner} icon labelPosition = 'left' >
                   <Icon name = 'plus circle' / >
                   Add a meal
                 </Button> 
@@ -152,6 +172,12 @@ const EthnicChoice = (props) => {
 		);
 }
 
+const flagRenderer = item => {
+	return(
+	<Flag name={item.countryCode} />
+	);
+}
+
 const EthnicSelect =(props) => {
 	return(
 		<Select placeholder="Choose Type"
@@ -162,7 +188,7 @@ const EthnicSelect =(props) => {
 
 const CurrentChoices =(props) => {
   return(
-    <strong> 88 </strong>
+    <strong> {props.currentChoices} </strong>
   );
 }
 export default InfoHeader;

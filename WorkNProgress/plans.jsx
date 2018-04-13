@@ -19,3 +19,18 @@ render(){
 	</ul>
 	);
 }
+
+*********** Card Extra *************
+
+extra = {}
+      <div>
+        <div className="rating">
+          <Rating clearable icon='star' size="huge" defaultRating={3} maxRating={4} />
+          <Rating maxRating={5} onRate={this.handleRate} />
+          <pre>{JSON.stringify(this.state, null, 2)}</pre>
+        </div> 
+        <Button icon labelPosition = "right" floated="right" color="red">
+            remove
+              <Icon name='trash' />
+        </Button>
+      </div>

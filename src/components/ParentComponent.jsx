@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import InfoHeader from './InfoHeader/InfoHeader';
-import CardBase from './CardGroup/Card';
+import CardBase from './CardGroup/CardBaseOrig';
 
-var dinners = [
+let dinners = [
   {
     meal:"Pizza",
     ethnicity:"Italian",
@@ -64,18 +64,60 @@ var dinners = [
 
 class ParentComponent extends Component {
   state = {
-    currentDinner: "Chicken Parmesan",
     currentChoices: null,
-    prepTime: 22,
-    randomPick:"",
-    counter: 1,
-    dinners: dinners
+    randomMeal: "",
+    numberHolder: null,
+    dinners: dinners,
+    rating: null
   };
 
+  addNewDinner (e) {
+    let updated = this.state.dinners.slice();
+    updated.push("");
+    this.setState({dinners:updated});
+  }
+  
+  componentDidMount() {
+    console.log('exampleComponent mounted');
+    let numberOfDinners = dinners.length;
+    this.setState({currentChoices:numberOfDinners});
+    console.log('currrent choices is now: {props.currentChoices}' );
+  }
+  
+  howManyChoices = () => {
+    let numberOfDinners = dinners.length;
+    this.setState({currentChoices:numberOfDinners});
+}
+generateRandomNumber= () => {
+  let randomChoice = Math.floor(Math.random() * dinners.length);
+  console.log(randomChoice);
+  this.setState({numberHolder : randomChoice})
+}
+
+  chooseRandom = (e) => {
+    e.preventDefault();
+    let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
+    console.log(randomChoice);
+    let chosenMeal = randomChoice.meal;
+    this.setState({randomMeal:chosenMeal});
+    console.log(this.state.randomMeal);
+  }
+
+  handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating })
+
+
   render(){
+    const { randomMeal, numberHolder, dinners, currentChoices } = this.state;
     return(
       <div>
-        <InfoHeader/>
+        <InfoHeader
+          randomMeal={this.randomMeal}
+          numberHolder={this.numberHolder}
+          currentChoices={this.currentChoices}
+          generateRandomNumber={this.generateRandomNumber}
+          chooseRandom={this.chooseRandom}
+          howManyChoices={this.howManyChoices}
+        />
         <Container>
           <CardBase/>
         </Container>
@@ -83,6 +125,7 @@ class ParentComponent extends Component {
     );
   }
 };
+
 
 
 

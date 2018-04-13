@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react';
 import { Card, Icon, Image, Button } from 'semantic-ui-react'
 // note - need to change form element syntax below render
 
