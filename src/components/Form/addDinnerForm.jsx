@@ -6,7 +6,7 @@ import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
 
 
-const FormInput extends Component (
+const FormInput =(props) => {
 	state={
     meal:"",
     ethnicity:"",
@@ -15,6 +15,7 @@ const FormInput extends Component (
     image:"",
     ordered:false
   };
+}
 
   // old style - not needed anymore??
   // this.handleInputChange = this.handleInputChange.bind(this);

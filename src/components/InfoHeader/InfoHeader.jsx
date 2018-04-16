@@ -4,15 +4,16 @@ import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, 
 const EthnicChoices = [
 		{
 			key:"mx",
-			value:"mx",
+			value:"com",
 			flag:"mx",
 			text:"Mexican"
 		},
 		{
 			key:"us",
 			value:"us",
+			name:"us",
+			text:"American",
 			flag:"us",
-			text:"American"
 		},
 		{
 			key:"it",
@@ -36,21 +37,20 @@ const EthnicChoices = [
 ]
 
 const InfoHeader =(props) =>{
-		return(
-  <div className="InfoHeader">
+		return(  <div className="InfoHeader">
     <Segment.Group raised>
       <Banner 
-      	dinners = {this.dinners}
-      	currentChoices = {this.currentChoices}
+      	dinners = {props.dinners}
+      	currentChoices = {props.currentChoices}
       />
       <Navbar
-      	numberHolder = {this.numberHolder}
-      	randomMeal ={this.randomMeal}
-      	chooseRandom = {this.chooseRandom}
-      	GenerateRandomNumber = {this.GenerateRandomNumber}
+      	randomMeal ={props.randomMeal}
+      	chooseRandom = {props.chooseRandom}
+      	addNewDinner = {props.addNewDinner}
       />
     </Segment.Group>
 	</div>
+
 	);
 	}
 
@@ -68,7 +68,9 @@ const Banner = (props) => {
           </h1>
         </Segment>
         <Segment>
-					<Stat />				
+					<Stat 
+					currentChoices={props.currentChoices}
+					/>				
 				</Segment>
       </Segment.Group>
     </div>
@@ -76,6 +78,7 @@ const Banner = (props) => {
 }
 
 const Stat = (props) => {
+	console.log(props.currentChoices);
   return (
     <div className="DinnerTotal" >
       <Header as = 'h3' floated="right">
@@ -83,9 +86,7 @@ const Stat = (props) => {
           <Statistic.Value>
             <Icon color = "red" name="food" size="small"/>
             <span>: </span>            
-            <CurrentChoices
-              currentChoices = {props.currentChoices} 
-            />            
+              {props.currentChoices} 
           </Statistic.Value>
           <Statistic.Label >Dinner Choices</Statistic.Label>
         </Statistic>
@@ -102,25 +103,16 @@ const Navbar = (props) => {
           <Grid.Column >
             <Menu secondary pointing >
               <Menu.Item >
-	             	<Button onClick={this.chooseRandom}>
+	             	<Button icon labelPosition="left" onClick={props.chooseRandom}>
+	             		<Icon name='food' />
 	              	Random Pick
 	              </Button>
               </Menu.Item>
               <Menu.Item>
-	  				<h4>
-	  					
-              randomMeal = {props.randomMeal} 
-              
-            </h4> 
+			  				<h4>
+		              {props.randomMeal}              
+		            </h4> 
 	  					</Menu.Item>
-              <Menu.Item>
-              	<Button onClick={this.GenerateRandomNumber}>
-	  							Generate#
-	  						</Button>
-	  					</Menu.Item>
-	  					<Menu.Item>
-	  							<h4>numberHolder{this.numberHolder}</h4>
-	  					</Menu.Item>              
               <Menu.Item>
                 <Button icon labelPosition='left'>
                   <Icon name='food' />
@@ -129,8 +121,8 @@ const Navbar = (props) => {
               </Menu.Item>
               	<EthnicChoice />
               <Menu.Item >
-                <Button onClick={this.addNewDinner} icon labelPosition = 'left' >
-                  <Icon name = 'plus circle' / >
+                <Button onClick={props.addNewDinner} icon labelPosition = 'left' >
+                  <Icon name = 'plus circle' />
                   Add a meal
                 </Button> 
               </Menu.Item> 
@@ -150,7 +142,7 @@ const EthnicChoice = (props) => {
 					<Dropdown.Menu>
 						<Dropdown.Header>
 							<Dropdown.Item
-								label = { { name: 'China' } } text = 'Mexican' value="Mexican">
+								label = { { flag: 'mx' } } Flag name="mx" text = 'Mexican' value="Mexican">
 							</Dropdown.Item>
 							<Dropdown.Item
 								label = { { color: 'blue', empty: true, circular: true } } text = 'American'>
@@ -186,9 +178,4 @@ const EthnicSelect =(props) => {
 		);
 }
 
-const CurrentChoices =(props) => {
-  return(
-    <strong> {props.currentChoices} </strong>
-  );
-}
 export default InfoHeader;

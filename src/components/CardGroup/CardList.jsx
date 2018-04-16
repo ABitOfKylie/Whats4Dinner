@@ -7,6 +7,22 @@ const CardList = (props) => {
   return (
     <Card.Group itemsPerRow={4}>
       {
+        props.randomMeal ? 
+        props.dinners.map((dinner, index) => {
+          if(dinner.meal === props.randomMeal) {
+            return (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            );
+          }
+
+        })
+        :
         props.dinners.map((dinner, index) => (
           <DinnerCard
             key={index}

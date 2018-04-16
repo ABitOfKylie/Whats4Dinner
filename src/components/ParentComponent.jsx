@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import InfoHeader from './InfoHeader/InfoHeader';
-import CardBase from './CardGroup/CardBaseOrig';
+import CardList from './CardGroup/CardList';
+// import FormInput from './Form/addDinnerForm';
 
 let dinners = [
   {
@@ -9,15 +10,15 @@ let dinners = [
     ethnicity:"Italian",
     prepTime:"25 min",
     description:"A circular platform covered with a tangy tomato sauce, smothered in cheese.",
-    image:"",
+    image:"../../images/Pizza.jpg",
     ordered:false
   },
   {
-    meal:"Penne Arrabica",
+    meal:"Penne PenneArrabiata",
     ethnicity:"Italian",
     prepTime:"35 min",
     description:"Penne pasta with spicy tomato sauce.",
-    image:"",
+    image:"../../images/PenneArrabiata.jpg",
     ordered:false
   },  
   {
@@ -25,7 +26,7 @@ let dinners = [
     ethnicity:"Italian",
     prepTime:"45 min",
     description:"Meat and noodles covered with a tangy tomato sauce, smothered in cheese.",
-    image:"",
+    image:"../../images/Lasagna.jpg",
     ordered:false
   },
   {
@@ -33,7 +34,7 @@ let dinners = [
     ethnicity:"Mexican",
     prepTime:"35 min",
     description:"Rolled up beans, cheese and gunk.",
-    image:"",
+    image:"../../images/Burritos.jpg",
     ordered:false
   },
   {
@@ -41,7 +42,7 @@ let dinners = [
     ethnicity:"Mexican",
     prepTime:"75 min",
     description:"Mexican chocolate adds an intriguing complexity to the smoky, savory sauce. Stir in some cooked, shredded chicken and you've got a whole new go-to chili.",
-    image:"",
+    image:"../../images/ChickenMole.jpg",
     ordered:false
   },
   {
@@ -49,15 +50,15 @@ let dinners = [
     ethnicity:"American",
     prepTime:"55 min",
     description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
-    image:"",
+    image:"../../images/FriedChicken.jpg",
     ordered:false
   },   
   {
-    meal:"Fried Chicken 2",
+    meal:"Hamburgers",
     ethnicity:"American",
-    prepTime:"55 min",
-    description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
-    image:"",
+    prepTime:"25 min",
+    description:"A hamburger is a sandwich consisting of a cooked meat patty on a bun or roll. You can order a hamburger, fries, and a shake at most fast food restaurants. Hamburgers are traditionally made with ground beef and served with onions, tomatoes, lettuce, ketchup, and other garnishes.",
+    image:"../../images/Hamburger.jpg",
     ordered:false
   }   
 ];
@@ -65,8 +66,7 @@ let dinners = [
 class ParentComponent extends Component {
   state = {
     currentChoices: null,
-    randomMeal: "",
-    numberHolder: null,
+    randomMeal: null,
     dinners: dinners,
     rating: null
   };
@@ -76,29 +76,13 @@ class ParentComponent extends Component {
     updated.push("");
     this.setState({dinners:updated});
   }
-  
-  componentDidMount() {
-    console.log('exampleComponent mounted');
-    let numberOfDinners = dinners.length;
-    this.setState({currentChoices:numberOfDinners});
-    console.log('currrent choices is now: {props.currentChoices}' );
-  }
-  
-  howManyChoices = () => {
-    let numberOfDinners = dinners.length;
-    this.setState({currentChoices:numberOfDinners});
-}
-generateRandomNumber= () => {
-  let randomChoice = Math.floor(Math.random() * dinners.length);
-  console.log(randomChoice);
-  this.setState({numberHolder : randomChoice})
-}
 
   chooseRandom = (e) => {
     e.preventDefault();
     let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
     console.log(randomChoice);
     let chosenMeal = randomChoice.meal;
+    console.log(chosenMeal);
     this.setState({randomMeal:chosenMeal});
     console.log(this.state.randomMeal);
   }
@@ -107,21 +91,29 @@ generateRandomNumber= () => {
 
 
   render(){
-    const { randomMeal, numberHolder, dinners, currentChoices } = this.state;
+    const { randomMeal, dinners, currentChoices } = this.state;
     return(
       <div>
         <InfoHeader
-          randomMeal={this.randomMeal}
-          numberHolder={this.numberHolder}
-          currentChoices={this.currentChoices}
-          generateRandomNumber={this.generateRandomNumber}
+          randomMeal={randomMeal}
+          currentChoices={dinners.length}          
           chooseRandom={this.chooseRandom}
-          howManyChoices={this.howManyChoices}
+          addNewDinner={null}
         />
         <Container>
-          <CardBase/>
+          <CardList
+            randomMeal={randomMeal}
+            dinners={dinners}
+            removeDinner={null}
+            handleRate={null}
+          />
+        </Container>
+        <Container>
+          <addDinnerForm
+          />
         </Container>
       </div>
+
     );
   }
 };

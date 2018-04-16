@@ -21,7 +21,13 @@ render(){
 }
 
 *********** Card Extra *************
+import CardList from './CardGroup/CardList';
 
+line 114
+        <Container>
+          <CardList/>
+            dinners = {dinners}
+        </Container>
 extra = {}
       <div>
         <div className="rating">
