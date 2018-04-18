@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container} from 'semantic-ui-react';
 import InfoHeader from './InfoHeader/InfoHeader';
 import CardList from './CardGroup/CardList';
-// import FormInput from './Form/addDinnerForm';
+import FormInput from './Form/addDinnerForm';
 
 let dinners = [
   {
     meal:"Pizza",
     ethnicity:"Italian",
-    prepTime:"25 min",
     description:"A circular platform covered with a tangy tomato sauce, smothered in cheese.",
     image:"../../images/Pizza.jpg",
     ordered:false
@@ -16,7 +15,6 @@ let dinners = [
   {
     meal:"Penne PenneArrabiata",
     ethnicity:"Italian",
-    prepTime:"35 min",
     description:"Penne pasta with spicy tomato sauce.",
     image:"../../images/PenneArrabiata.jpg",
     ordered:false
@@ -24,7 +22,6 @@ let dinners = [
   {
     meal:"Lasagna",
     ethnicity:"Italian",
-    prepTime:"45 min",
     description:"Meat and noodles covered with a tangy tomato sauce, smothered in cheese.",
     image:"../../images/Lasagna.jpg",
     ordered:false
@@ -32,7 +29,6 @@ let dinners = [
   {
     meal:"Burritos",
     ethnicity:"Mexican",
-    prepTime:"35 min",
     description:"Rolled up beans, cheese and gunk.",
     image:"../../images/Burritos.jpg",
     ordered:false
@@ -40,7 +36,6 @@ let dinners = [
   {
     meal:"Chicken Mole",
     ethnicity:"Mexican",
-    prepTime:"75 min",
     description:"Mexican chocolate adds an intriguing complexity to the smoky, savory sauce. Stir in some cooked, shredded chicken and you've got a whole new go-to chili.",
     image:"../../images/ChickenMole.jpg",
     ordered:false
@@ -48,7 +43,6 @@ let dinners = [
   {
     meal:"Fried Chicken",
     ethnicity:"American",
-    prepTime:"55 min",
     description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
     image:"../../images/FriedChicken.jpg",
     ordered:false
@@ -56,7 +50,6 @@ let dinners = [
   {
     meal:"Hamburgers",
     ethnicity:"American",
-    prepTime:"25 min",
     description:"A hamburger is a sandwich consisting of a cooked meat patty on a bun or roll. You can order a hamburger, fries, and a shake at most fast food restaurants. Hamburgers are traditionally made with ground beef and served with onions, tomatoes, lettuce, ketchup, and other garnishes.",
     image:"../../images/Hamburger.jpg",
     ordered:false
@@ -68,15 +61,54 @@ class ParentComponent extends Component {
     currentChoices: null,
     randomMeal: null,
     dinners: dinners,
-    rating: null
+    rating: null,
+    ethnicSort:null,
+    inputTest:"",
+    meal:"",
+    ethnicity:"",
+    description:"",
+    image:"",
+    ordered:false
   };
+
+
+  // viewAll () {
+  //   this.state.dinners.map((dinner, index) => {
+  //     return(
+  //       console.log(dinners)
+  //     );
+  //   })
+  // }
+
+
+   handleEthnicityChange = (event, data) => {
+     this.setState({ethnicSort: event.target.value});
+     console.log(this.state.ethnicSort);
+    }
 
   addNewDinner (e) {
     let updated = this.state.dinners.slice();
     updated.push("");
     this.setState({dinners:updated});
   }
+   save() {
+      var todos = [...this.state.todos];
+      todos.push(this.newText.value);
+      this.setState({todos});
+    }
 
+    inputChange = (e) => {
+      this.setState({
+        [e.target.name]:e.target.value
+      });
+        console.log(e.target.value);
+    }
+
+    handleKeyDown(e){
+      if(e.keyCode !== 13){
+        return;
+      } 
+    }
   chooseRandom = (e) => {
     e.preventDefault();
     let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
@@ -89,9 +121,28 @@ class ParentComponent extends Component {
 
   handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating })
 
+  change = (e) => {
+    this.setState({
+      [e.target.name]:e.target.value 
+    })
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault
+    console.log(this.state);
+    // this.props.onSubmit (this.state)
+    this.setState({
+      meal:"",
+      ethnicity:"",
+      description:"",
+      image:"",
+      ordered:false
+    })
+    console.log(this.state);
+  }
 
   render(){
-    const { randomMeal, dinners, currentChoices } = this.state;
+    const { randomMeal, dinners, currentChoices, ethnicSort, inputTest, meal, ethnicity, description, image, ordered} = this.state;
     return(
       <div>
         <InfoHeader
@@ -99,6 +150,12 @@ class ParentComponent extends Component {
           currentChoices={dinners.length}          
           chooseRandom={this.chooseRandom}
           addNewDinner={null}
+          ethnicSort={ethnicSort}
+          handleEthnicityChange={this.handleEthnicityChange}
+          viewAll={null}
+          inputTest={inputTest}
+          inputChange={this.inputChange}
+          handleKeyDown={this.handleKeyDown}
         />
         <Container>
           <CardList
@@ -109,7 +166,14 @@ class ParentComponent extends Component {
           />
         </Container>
         <Container>
-          <addDinnerForm
+          <FormInput
+            meal={meal}
+            ethnicity={ethnicity}
+            description={description}
+            image={image}
+            ordered={false}
+            change={this.change}
+            onSubmit={this.onSubmit}
           />
         </Container>
       </div>

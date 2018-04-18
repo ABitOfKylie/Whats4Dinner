@@ -10,14 +10,26 @@ const DinnerCard = (props) => {
       meta = {props.ethnicity}
       description = {props.description}
      	extra = {
-     		<Rating maxRating={5} onRate={this.handleRate} />,
-        <pre>{JSON.stringify(this.state, null, 2)} </pre>,
-      		<Button icon labelPosition = "right" floated="right" color="red" content="Remove" icon="trash" labelPosition='right'
+     		<div className='ui two buttons'>
+     			<div className="rateBox">
+     			<Rating maxRating={4} icon="heart"onRate={this.handleRate} />
+      		 <pre>{JSON.stringify(this.state, null, 2)} </pre>
+      		 </div>
+     			<Button icon="trash" labelPosition = "right" floated="right" color="red" content="Remove" size="tiny"
       		/>
+      		</div>
+     			
+     		// <Rating maxRating={5} onRate={this.handleRate} />,
+       //  <pre>{JSON.stringify(this.state, null, 2)} </pre>,
+      		// <Button icon labelPosition = "right" floated="right" color="red" content="Remove" icon="trash" labelPosition='right'
+      		// />
+      		// <Button icon labelPosition = "left" floated="left" color="red" content="Remove" icon="trash" labelPosition='right'
+      		// />
     	}
     />
   );
 }
+
 
 
 

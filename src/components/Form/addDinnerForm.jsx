@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Card, Icon, Image, Button } from 'semantic-ui-react'
+import React from 'react';
+import {Button, Header, Icon, Form, Segment, Grid } from 'semantic-ui-react'
 // note - need to change form element syntax below render
 
 //see notes on addDinnerFormLogic - pull over add dinner function
@@ -7,136 +7,65 @@ import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
 
 const FormInput =(props) => {
-	state={
-    meal:"",
-    ethnicity:"",
-    prepTime:"",
-    description:"",
-    image:"",
-    ordered:false
-  };
-}
-
-  // old style - not needed anymore??
-  // this.handleInputChange = this.handleInputChange.bind(this);
-  // this.handleSubmit = this.handleSubmit.bind(this);
-
-  handleInputChange(event){
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]:value  //[name] makes it generic handles all properties' change
-    })
-  }
-
-  handleSubmit(event){
-    event.preventDefault();
-    this.props.onAddDinner(this.state);
-    this.setState({
-      meal:"",
-      ethnicity:"",
-      prepTime:"",
-      description:"",
-      image:"",
-    });
-  }
-
-
-  render() {
-    return (
-      <div>
-        <h4>Add New Dinner Option</h4>
-        <form className="form-horizontal" onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="inputDinnerMeal" className="col-sm-2" control-label>Name of Meal</label>
-            <div className="col-sm-10">
-              <input
-                  name="meal" 
-                  type="text" 
-                  className="form-control" 
-                  id="inputDinnerMeal" 
-                  value={this.state.meal} 
-                  onChange={this.handleInputChange} 
-                  placeholder="Enter New Meal Choice">
-              </input>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="inputDinnerEthnicity" className="col-sm-2" control-label>Meal Ethnicity</label>
-            <div className="col-sm-10">
-              <select
-                  name="ethnicity" 
-                  type="text" 
-                  className="form-control" 
-                  id="inputDinnerEthnicity" 
-                  value={this.state.ethnicity} 
-                  onChange={this.handleInputChange}>
-                  <option>American</option>
-                  <option>Chinese</option>
-                  <option>Indian</option>
-                  <option>Italian</option>
-                  <option>Mexican</option>
-                  <option>Thai</option>
-              </select>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="inputDinnerprepTime" className="col-sm-2" control-label>Preparation Time</label>
-            <div className="col-sm-10">
-              <input
-    label={{ basic: true, content: 'minutes' }}
-    labelPosition='right'
-    
-                  name="prepTime" 
-                  type="text" 
-                  className="form-control" 
-                  id="inputDinnerprepTime" 
-                  value={this.state.prepTime} 
-                  onChange={this.handleInputChange} 
-                  placeholder="Enter Meal Preparation Time">
-              </input>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="inputDinnerDescription" className="col-sm-2" control-label>Meal Description</label>
-            <div className="col-sm-10">
-              <textarea
-                  name="description"  
-                  className="form-control" 
-                  rows="3"
-                  id="inputDinnerDescription" 
-                  value={this.state.description} 
-                  onChange={this.handleInputChange} 
-                  placeholder="Enter Meal Description">
-              </textarea>
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="inputDinnerImage" className="col-sm-2" control-label>Meal Image</label>
-            <div className="col-sm-10">
-              <input
+  return(
+    <Grid text align="center" style={{height:"100%"}} verticalAlign="center">
+      <Grid.Column style={{maxWidth:300}}>
+        <Header as='h2' icon textAlign='center'>
+          <Icon name='food' color="red" circular />
+          <Header.Content>
+            Add New Dinner Option
+          </Header.Content>
+        </Header>
+      <Segment stacked inverted color="red">
+        <Form  size="large" onSubmit={this.handleSubmit}>
+          <Form.Group 
+            change={props.change}
+            onSubmit={props.onSubmit}
+          >
+            <Form.Input
+                label="Dinner Name"
+                name="meal" 
+                type="text" 
+                value={props.meal} 
+                onChange={(e) => props.change (e)} 
+                placeholder="Enter New Meal Choice">
+            </Form.Input>
+          </Form.Group>
+        
+          <Form.Group>
+            <Form.Input label="Meal Description">
+                <textarea
+                    name="description"  
+                    rows="3"
+                    value={props.description} 
+                    onChange={(e) => props.change (e)}                  
+                    placeholder="Enter Meal Description">
+                </textarea>
+            </Form.Input>
+          </Form.Group>
+          <Form.Group>
+              <Form.Input
+                  label="Image"
+                  name="image"
                   image="image" 
                   type="text" 
-                  className="form-control" 
-                  id="inputDinnerImage" 
-                  value={this.state.image} 
-                  onChange={this.handleInputChange} 
+                  value={props.image} 
+                  onChange={(e) => props.change (e)} 
                   placeholder="Enter Meal Image Src ex: http://...">
-              </input>
-            </div>
-          </div>
-          <div className="form-group">
-            <div className="col-sm-offset-2 col-sm-10">
-              <button type="submit" className="btn btn-success">Add Meal</button>
-            </div>
-          </div> 
-        </form>
-      </div>
-    );
-  } //render
-) //FormInput
+              </Form.Input>
+          </Form.Group>
+          <Form.Group>
+              <Button onClick={e =>props.onSubmit (e)}>
+                Submit
+              </Button>
+          </Form.Group> 
+        </Form>
+      </Segment>
+    </Grid.Column> 
+  </Grid> //main div
+  );
+}
+
 
 
 export default FormInput;

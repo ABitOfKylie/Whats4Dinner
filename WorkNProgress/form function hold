@@ -1,0 +1,46 @@
+form function hold
+
+  // old style - not needed anymore??
+  // this.handleInputChange = this.handleInputChange.bind(this);
+  // this.handleSubmit = this.handleSubmit.bind(this);
+
+  // handleInputChange(event){
+  //   const target = event.target;
+  //   const value = target.value;
+  //   const name = target.name;
+
+  //   this.setState({
+  //     [name]:value  //[name] makes it generic handles all properties' change
+  //   })
+  // }
+
+  // handleSubmit(event){
+  //   event.preventDefault();
+  //   this.props.onAddDinner(this.state);
+  //   this.setState({
+  //     meal:"",
+  //     ethnicity:"",
+  //     description:"",
+  //     image:"",
+  //   });
+  // }
+
+  ******************** Ethnicity Dropdown ****************
+  				<Form.Group label="Meal Ethnicity">
+              <select
+                  name="ethnicity" 
+                  type="text" 
+                  className="form-control" 
+                  value={props.ethnicity} 
+                  onChange={props.handleInputChange}>
+                  <option>American</option>
+                  <option>Chinese</option>
+                  <option>Indian</option>
+                  <option>Italian</option>
+                  <option>Mexican</option>
+                  <option>Thai</option>
+              </select>
+          </Form.Group>
+
+
+alt submit button -- conflicts with e.preventDefault in onSubmit method in Parent Component

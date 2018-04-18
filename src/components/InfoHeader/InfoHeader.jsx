@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, Flag, Select } from 'semantic-ui-react';
+import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, Flag, Select, Input } from 'semantic-ui-react';
 
 const EthnicChoices = [
 		{
@@ -37,7 +37,8 @@ const EthnicChoices = [
 ]
 
 const InfoHeader =(props) =>{
-		return(  <div className="InfoHeader">
+	return(  
+		<div className="InfoHeader">
     <Segment.Group raised>
       <Banner 
       	dinners = {props.dinners}
@@ -47,12 +48,17 @@ const InfoHeader =(props) =>{
       	randomMeal ={props.randomMeal}
       	chooseRandom = {props.chooseRandom}
       	addNewDinner = {props.addNewDinner}
+      	ethnicSort={props.ethnicSort}
+      	handleEthnicityChange={props.handleEthnicityChange}
+      	viewAll={props.viewAll}
+      	inputTest={props.inputTest}
+      	inputChange={props.inputChange}
+      	handleKeyDown={props.handleKeyDown}
       />
     </Segment.Group>
 	</div>
-
 	);
-	}
+}
 
 
 const Banner = (props) => {
@@ -78,11 +84,11 @@ const Banner = (props) => {
 }
 
 const Stat = (props) => {
-	console.log(props.currentChoices);
+	// console.log(props.currentChoices);
   return (
     <div className="DinnerTotal" >
       <Header as = 'h3' floated="right">
-        <Statistic color="orange" >
+        <Statistic color="grey" >
           <Statistic.Value>
             <Icon color = "red" name="food" size="small"/>
             <span>: </span>            
@@ -114,7 +120,7 @@ const Navbar = (props) => {
 		            </h4> 
 	  					</Menu.Item>
               <Menu.Item>
-                <Button icon labelPosition='left'>
+                <Button icon labelPosition='left' onClick={props.viewAll}>
                   <Icon name='food' />
                   View All
                 </Button>
@@ -122,9 +128,22 @@ const Navbar = (props) => {
               	<EthnicChoice />
               <Menu.Item >
                 <Button onClick={props.addNewDinner} icon labelPosition = 'left' >
-                  <Icon name = 'plus circle' />
-                  Add a meal
+                   <Icon name = 'plus circle' />
+                   Add a meal
                 </Button> 
+              </Menu.Item> 
+              <Menu.Item >
+                <Input 
+                	name="inputTest" 
+                	type="text"
+                	placeholder="Dinner Wish" 
+                	value={props.inputTest} 
+                	onChange={(e) => props.inputChange(e)} 
+                	// onChange={(e) => {console.log(e.target.value)}}
+                	// onKeyDown={props.handleKeyDown}
+                	icon="plus circle" 
+                	labelPosition = 'left'
+              	/>
               </Menu.Item> 
             </Menu> 
           </Grid.Column> 
@@ -138,29 +157,28 @@ const EthnicChoice = (props) => {
 
 			<Menu.Item>
 				<Dropdown text = "Ethnic Choice" icon = "flag"
-					floating labeled button className = "icon">
+					floating labeled button className = "icon" onClick={props.handleEthnicityChange} >
 					<Dropdown.Menu>
 						<Dropdown.Header>
 							<Dropdown.Item
-								label = { { flag: 'mx' } } Flag name="mx" text = 'Mexican' value="Mexican">
+								label = { { flag: 'mx' } } Flag name="mx" key="Mexican" text = 'Mexican' value="Mexican">
 							</Dropdown.Item>
 							<Dropdown.Item
-								label = { { color: 'blue', empty: true, circular: true } } text = 'American'>
+								label = { { color: 'blue', empty: true, circular: true } } key="American" text="American" value="American">
 							</Dropdown.Item>
 							<Dropdown.Item
-								label = { { color: 'orange', empty: true, circular: true } } text = 'Asian'>
+								label = { { color: 'orange', empty: true, circular: true } } key="Asian" text="Asian" value="Asian">
 							</Dropdown.Item>
 							<Dropdown.Item
-								label = { { color: 'red', empty: true, circular: true } } text = 'Italian'>
+								label = { { color: 'red', empty: true, circular: true } } key="Italian" text = "Italian" value="Italian">
 							</Dropdown.Item>
 							<Dropdown.Item
-								label = { { name: 'India' } } text = 'Indian' value="Indian">
+								label = { { name: 'India' } } key="Indian" text = 'Indian' value="Indian">
 							</Dropdown.Item>
 						</Dropdown.Header>
 					</Dropdown.Menu>
 				</Dropdown>
 			</Menu.Item>
-
 		);
 }
 
