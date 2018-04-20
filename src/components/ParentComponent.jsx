@@ -3,6 +3,7 @@ import { Container} from 'semantic-ui-react';
 import InfoHeader from './InfoHeader/InfoHeader';
 import CardList from './CardGroup/CardList';
 import FormInput from './Form/addDinnerForm';
+import DinnerCard from './CardGroup/DinnerCard'
 
 let dinners = [
   {
@@ -10,49 +11,49 @@ let dinners = [
     ethnicity:"Italian",
     description:"A circular platform covered with a tangy tomato sauce, smothered in cheese.",
     image:"../../images/Pizza.jpg",
-    ordered:false
+    display:false
   },
   {
-    meal:"Penne PenneArrabiata",
+    meal:"Penne Arrabiata",
     ethnicity:"Italian",
     description:"Penne pasta with spicy tomato sauce.",
     image:"../../images/PenneArrabiata.jpg",
-    ordered:false
+    display:false
   },  
   {
     meal:"Lasagna",
     ethnicity:"Italian",
     description:"Meat and noodles covered with a tangy tomato sauce, smothered in cheese.",
     image:"../../images/Lasagna.jpg",
-    ordered:false
+    display:false
   },
   {
     meal:"Burritos",
     ethnicity:"Mexican",
     description:"Rolled up beans, cheese and gunk.",
     image:"../../images/Burritos.jpg",
-    ordered:false
+    display:false
   },
   {
     meal:"Chicken Mole",
     ethnicity:"Mexican",
     description:"Mexican chocolate adds an intriguing complexity to the smoky, savory sauce. Stir in some cooked, shredded chicken and you've got a whole new go-to chili.",
     image:"../../images/ChickenMole.jpg",
-    ordered:false
+    display:false
   },
   {
     meal:"Fried Chicken",
     ethnicity:"American",
     description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
     image:"../../images/FriedChicken.jpg",
-    ordered:false
+    display:false
   },   
   {
     meal:"Hamburgers",
     ethnicity:"American",
     description:"A hamburger is a sandwich consisting of a cooked meat patty on a bun or roll. You can order a hamburger, fries, and a shake at most fast food restaurants. Hamburgers are traditionally made with ground beef and served with onions, tomatoes, lettuce, ketchup, and other garnishes.",
     image:"../../images/Hamburger.jpg",
-    ordered:false
+    display:false
   }   
 ];
 
@@ -68,18 +69,19 @@ class ParentComponent extends Component {
     ethnicity:"",
     description:"",
     image:"",
-    ordered:false
+    display:false
   };
 
 
-  // viewAll () {
-  //   this.state.dinners.map((dinner, index) => {
-  //     return(
-  //       console.log(dinners)
-  //     );
-  //   })
-  // }
-
+  viewAll () {
+    return
+    this.state.dinners.map(dinner => {
+      <DinnerCard key={dinner.index} meal={dinner.meal} description={dinner.description} image={dinner.image} ethnicity={dinner.ethnicity} display={dinner.display} />
+      return(
+        console.log(this.state.dinners)
+      )
+    })
+  }
 
    handleEthnicityChange = (event, data) => {
      this.setState({ethnicSort: event.target.value});
@@ -136,13 +138,31 @@ class ParentComponent extends Component {
       ethnicity:"",
       description:"",
       image:"",
-      ordered:false
+      display:false
     })
     console.log(this.state);
   }
 
+  handleAddDinner = () => {
+    this.setState({
+      dinners: this.state.dinners.concat([
+        { meal: "",
+          ethnicity: "",
+          description: "",
+          image:"",
+          display:false
+      }
+        ])
+    });
+  }
+
+  handleRemoveDinner = (idx) => () => {
+    this.setState({
+      dinners: this.state.dinners.filter((s, sidx) => idx !== sidx)
+    });
+  }
   render(){
-    const { randomMeal, dinners, currentChoices, ethnicSort, inputTest, meal, ethnicity, description, image, ordered} = this.state;
+    const { randomMeal, dinners, currentChoices, ethnicSort, inputTest, meal, ethnicity, description, image, display} = this.state;
     return(
       <div>
         <InfoHeader
@@ -152,7 +172,7 @@ class ParentComponent extends Component {
           addNewDinner={null}
           ethnicSort={ethnicSort}
           handleEthnicityChange={this.handleEthnicityChange}
-          viewAll={null}
+          viewAll={this.viewAll}
           inputTest={inputTest}
           inputChange={this.inputChange}
           handleKeyDown={this.handleKeyDown}
@@ -171,9 +191,10 @@ class ParentComponent extends Component {
             ethnicity={ethnicity}
             description={description}
             image={image}
-            ordered={false}
+            display={false}
             change={this.change}
             onSubmit={this.onSubmit}
+            display={display}
           />
         </Container>
       </div>

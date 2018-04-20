@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Header, Icon, Form, Segment, Grid } from 'semantic-ui-react'
+import {Button, Header, Icon, Form, Segment, Grid, Container } from 'semantic-ui-react'
 // note - need to change form element syntax below render
 
 //see notes on addDinnerFormLogic - pull over add dinner function
@@ -8,20 +8,18 @@ import {Button, Header, Icon, Form, Segment, Grid } from 'semantic-ui-react'
 
 const FormInput =(props) => {
   return(
-    <Grid text align="center" style={{height:"100%"}} verticalAlign="center">
-      <Grid.Column style={{maxWidth:300}}>
+    <Grid text align="center" style={{height:"100%"}} verticalAlign="middle">
+      <Grid.Column className="formCard" style={{maxWidth:300}}>
         <Header as='h2' icon textAlign='center'>
           <Icon name='food' color="red" circular />
           <Header.Content>
             Add New Dinner Option
           </Header.Content>
         </Header>
-      <Segment stacked inverted color="red">
+      <Segment className="formContent"stacked>
         <Form  size="large" onSubmit={this.handleSubmit}>
-          <Form.Group 
-            change={props.change}
-            onSubmit={props.onSubmit}
-          >
+          <Form.Group >
+
             <Form.Input
                 label="Dinner Name"
                 name="meal" 
@@ -55,14 +53,14 @@ const FormInput =(props) => {
               </Form.Input>
           </Form.Group>
           <Form.Group>
-              <Button onClick={e =>props.onSubmit (e)}>
+              <Button fluid onClick={e =>props.onSubmit (e)}>
                 Submit
               </Button>
           </Form.Group> 
         </Form>
       </Segment>
     </Grid.Column> 
-  </Grid> //main div
+  </Grid> 
   );
 }
 

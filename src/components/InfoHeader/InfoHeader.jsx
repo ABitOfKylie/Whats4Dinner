@@ -67,7 +67,7 @@ const Banner = (props) => {
       <Segment.Group horizontal raised >
         <Segment>
           <h1 className="headline"> 
-          <Image size="small" src = '../images/dinnerLogo.jpeg'avatar />
+          <Image size="small" src = '../images/utensilsBlack.jpg'avatar />
             What 's For Dinner 
             <Flag name='ae' />
             <Flag name="mx"/>
@@ -88,7 +88,7 @@ const Stat = (props) => {
   return (
     <div className="DinnerTotal" >
       <Header as = 'h3' floated="right">
-        <Statistic color="grey" >
+        <Statistic color="black" >
           <Statistic.Value>
             <Icon color = "red" name="food" size="small"/>
             <span>: </span>            
@@ -105,11 +105,11 @@ const Navbar = (props) => {
   return (
   <div className="Navbar">
 
-        <Grid columns = { 5 } doubling >
+        <Grid columns = { 5 } doubling className="buttonBar">
           <Grid.Column >
             <Menu secondary pointing >
               <Menu.Item >
-	             	<Button icon labelPosition="left" onClick={props.chooseRandom}>
+	             	<Button className="barButton" icon labelPosition="left" onClick={props.chooseRandom}>
 	             		<Icon name='food' />
 	              	Random Pick
 	              </Button>
@@ -120,7 +120,7 @@ const Navbar = (props) => {
 		            </h4> 
 	  					</Menu.Item>
               <Menu.Item>
-                <Button icon labelPosition='left' onClick={props.viewAll}>
+                <Button className="bubba" icon labelPosition='left' onClick={props.viewAll}>
                   <Icon name='food' />
                   View All
                 </Button>

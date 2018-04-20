@@ -5,7 +5,7 @@ import DinnerCard from './DinnerCard';
 
 const CardList = (props) => {
   return (
-    <Card.Group itemsPerRow={4}>
+    <Card.Group equal itemsPerRow={4}>
       {
         props.randomMeal ? 
         props.dinners.map((dinner, index) => {
