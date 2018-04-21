@@ -47,7 +47,7 @@ const FormInput extends Component (
     return (
       <div>
         <h4>Add New Dinner Option</h4>
-        <form className="form-horizontal" onSubmit={this.handleSubmit}>
+        <Form className="form-horizontal" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="inputDinnerMeal" className="col-sm-2" control-label>Name of Meal</label>
             <div className="col-sm-10">
@@ -65,20 +65,18 @@ const FormInput extends Component (
           <div className="form-group">
             <label htmlFor="inputDinnerEthnicity" className="col-sm-2" control-label>Meal Ethnicity</label>
             <div className="col-sm-10">
-              <select
-                  name="ethnicity" 
-                  type="text" 
-                  className="form-control" 
-                  id="inputDinnerEthnicity" 
-                  value={this.state.ethnicity} 
-                  onChange={this.handleInputChange}>
-                  <option>American</option>
-                  <option>Chinese</option>
-                  <option>Indian</option>
-                  <option>Italian</option>
-                  <option>Mexican</option>
-                  <option>Thai</option>
-              </select>
+              <Dropdown 
+                  button
+                  floating labeled
+                  className="icon" 
+                  icon='flag' 
+                  iconPosition="left" 
+                  onChange={props.handleEthnicityChange}
+                  options={EthnicChoices}
+                  placeholder='Select Ethnic Type'  
+                  selection
+                  value={props.ethnicType}
+              />
             </div>
           </div>
           <div className="form-group">
@@ -128,7 +126,7 @@ const FormInput extends Component (
               <button type="submit" className="btn btn-success">Add Meal</button>
             </div>
           </div> 
-        </form>
+        </Form>
       </div>
     );
   } //render

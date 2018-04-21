@@ -11,12 +11,12 @@ const DinnerCard = (props) => {
       description = {props.description}
      	extra = {
      		<div two bottom attached className="bottomCardRow">
-     			<Rating maxRating={4} icon="heart"onRate={this.handleRate}>
-      		 <pre>{JSON.stringify(this.state, null, 2)} </pre>
+     			<Rating maxRating={4} icon="heart"onRate={props.handleRate}>
+      		 <pre>{JSON.stringify(props.state, null, 2)} </pre>
       		</Rating>
   				<Popup     
   					trigger={
-  						<Button icon='trash' floated="right" color="red"/>
+  						<Button icon='trash' floated="right" color="red" onClick={props.removeDinner}/>
 						}
     				content='Remove this dinner forever!'
   				/>

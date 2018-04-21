@@ -1,15 +1,46 @@
 import React from 'react';
-import {Button, Header, Icon, Form, Segment, Grid, Container } from 'semantic-ui-react'
-// note - need to change form element syntax below render
-
-//see notes on addDinnerFormLogic - pull over add dinner function
+import {Button, Header, Icon, Form, Segment, Grid, Flag } from 'semantic-ui-react'
 
 
+const EthnicChoices = [
+    {
+      key:"Mexican",
+      name:"Mexican",
+      flag:"mx",
+      text:"Mexican"
+    },
+    {
+      key:"American",
+      name:"American",
+      text:"American",
+      flag:"us",
+    },
+    {
+      key:"Italian",
+      name:"Italian",
+      flag:"it",
+      text:"Italian"
+    },
+    {
+      key:"Indian",
+      name:"Indian",
+      flag:"in",
+      text:"Indian"
+    },
+    {
+      key:"Chinese",
+      name:"Chinese",
+      flag:"cn",
+      text:"Chinese"
+    }
+]
 
 const FormInput =(props) => {
+
   return(
+    <div>
     <Grid text align="center" style={{height:"100%"}} verticalAlign="middle">
-      <Grid.Column className="formCard" style={{maxWidth:300}}>
+      <Grid.Column className="formCard" style={{maxWidth:600}}>
         <Header as='h2' icon textAlign='center'>
           <Icon name='food' color="red" circular />
           <Header.Content>
@@ -17,50 +48,43 @@ const FormInput =(props) => {
           </Header.Content>
         </Header>
       <Segment className="formContent"stacked>
-        <Form  size="large" onSubmit={this.handleSubmit}>
-          <Form.Group >
-
+        <Form  size="large">
+          <Form.Group widths="equal">
             <Form.Input
+                fluid
                 label="Dinner Name"
-                name="meal" 
-                type="text" 
-                value={props.meal} 
-                onChange={(e) => props.change (e)} 
-                placeholder="Enter New Meal Choice">
+                placeholder="Enter New Meal Choice"
+            >
             </Form.Input>
+            <Form.Select
+                fluid
+                label="Ethnicity"
+                options={EthnicChoices}
+                placeholder="Ethnicity"
+            >
+            </Form.Select>
           </Form.Group>
         
-          <Form.Group>
-            <Form.Input label="Meal Description">
-                <textarea
-                    name="description"  
-                    rows="3"
-                    value={props.description} 
-                    onChange={(e) => props.change (e)}                  
-                    placeholder="Enter Meal Description">
-                </textarea>
-            </Form.Input>
-          </Form.Group>
-          <Form.Group>
-              <Form.Input
-                  label="Image"
-                  name="image"
-                  image="image" 
-                  type="text" 
-                  value={props.image} 
-                  onChange={(e) => props.change (e)} 
-                  placeholder="Enter Meal Image Src ex: http://...">
-              </Form.Input>
-          </Form.Group>
-          <Form.Group>
-              <Button fluid onClick={e =>props.onSubmit (e)}>
-                Submit
-              </Button>
-          </Form.Group> 
+          <Form.TextArea
+                rows="3"
+                label="Description"
+                placeholder="Enter Meal Description"
+          >
+          </Form.TextArea>
+          <Form.Input
+              label="Image"
+              image="image" 
+              type="text" 
+              placeholder="Enter Meal Image example: http://...">
+          </Form.Input>
+          <Form.Button fluid onSubmit={props.change}>
+              Submit
+          </Form.Button>
         </Form>
       </Segment>
     </Grid.Column> 
   </Grid> 
+  </div>
   );
 }
 

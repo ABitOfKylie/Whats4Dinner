@@ -1,0 +1,144 @@
+Starting at Navbar and moving down
+
+What I really need help on: 
+  New function in Card List to cover all 3 scenarios
+
+  Help understanding how to pass data from the total form incl. the select dropdown as an obj including properties to dinner array.
+
+  oh - and how to connect the addDinnerForm to the addNewDinner function which is triggered by the Add A Meal button in the Infoheader.
+
+
+CSS: (Semantic is frustrating)
+  Want equal sizes of buttons, select and input on Navbar
+
+**************Functional Problems*******************
+  RandomPick Button updates State no longer displays card
+  
+  Parent Component: 
+    line 82: chooseRandom()
+    line 191: passed to InfoHeader
+    line 190: randomMeal in State, Const and passed to InfoH
+  InfoHeader Component:
+    line 51,52: both passed to Navbar Line 51,52
+    line 116: button using props.chooseRandom
+
+  Problem CardList  needs rewriting.
+    skip tertiary
+    3 scenarios:  Random Pick, View All and Ethnicity Filter 
+------------------------------------------
+
+View All Button  - is connected correctly
+  Parent Component:
+    line 117: viewAll function
+    line 195: passed to InfoHeader
+  InfoHeader Component: /Navbar
+    line 56: passed to Navbar
+    line 129: button using props.viewAll
+
+  Problem is Display  CardList (same for Ethnicity below)
+------------------------------------------
+
+Ethnicity Dropdown - 
+is connected,Flags are working!!! updates state EthnicType
+
+Const Ethnic Choices [
+    {
+      key:"mx",
+      value:"mx",
+      name:"Mexican",
+      flag:"mx"
+      text: "Mexican"
+    }, 
+    {
+    etc.
+    }
+
+] 
+
+currently in InfoHeader eventually should be moved to Parent Component and thereafter to Store
+
+Parent Component:
+  line 110 handleEthnicityChange function
+  line 139 function passed to InfoHeader
+  line 73, 186 ethnicType incl. in state and const
+  line 194 passed to InfoHeader
+InfoHeader:
+  line 133-144 Dropdown Menu 
+
+Problem:
+  1. Remember to Clear on Submit (can't find in docs)
+  2. right now Select Dropdown sends the data value as the flag "in" this won't match dinners.ethnicity "Indian"
+  3. Fix handleEthnicityChange to include
+      dinners.filter
+      Again - Card List Display
+
+
+/*handleEthnicityChange = (e, data) => {
+    e.preventDefault
+    console.log(data.value);
+    this.setState({ethnicType:data.value});
+  
+    then I'd like to do something like this
+    if dinners.ethnicity is equal to 
+    data.value passed from the Select element then
+    map the array and display appropriate cards
+
+    **** problem: Select is returning flag property "mx"
+    not value or key which is say "Mexican" which
+    would match dinner.ethnicity
+
+     let ethnicChoice = dinners.map(data =>
+      if(dinners.ethnicity == props.ethnicType){
+      console.log(ethnicChoice);
+      }
+    }; */
+
+------------------------------------------
+
+Add A Meal Button - 
+What does work:
+It is connected, adds Obj to dinner Array, # of current choices is updated and an additional blank card is displayed. 
+
+Problem/Goal: 
+Add A Meal Button should display addDinnerForm while hiding the dinner cards. Once submitted - form clears, disappears and cards reappear. (one day will use fade in/out)
+
+ParentComponent:
+  line 91: function change
+  line 131: function addNewDinner
+InfoHeader:
+  line 148: Button props.addNewDinner
+addDinnerForm:
+  line 51: Form onSubmit={props.change}  neither work
+  line 80: Button onSubmit={props.change
+
+  1. Function Help
+      right now only an empty object is added to newArray
+      no connection with addDinnerForm
+
+Question:
+  Unsure of placement to connect 'things'
+  Can't see where to pass onSubmit function in the addDinnerForm 
+
+  Steps taken: 
+ParentComponent:
+import FormInput from './Form/addDinnerForm';
+added to state the fields of the form: rating, meal, ethnicity, description and image - not sure if necessary
+line 208: added Form Component and related functions & state items
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

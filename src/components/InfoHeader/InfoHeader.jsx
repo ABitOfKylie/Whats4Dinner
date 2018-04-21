@@ -4,36 +4,39 @@ import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, 
 const EthnicChoices = [
 		{
 			key:"mx",
-			value:"com",
+			value:"mx",
+      name:"Mexican",
 			flag:"mx",
 			text:"Mexican"
 		},
 		{
 			key:"us",
 			value:"us",
-			name:"us",
+			name:"American",
 			text:"American",
 			flag:"us",
 		},
 		{
 			key:"it",
 			value:"it",
+      name:"Italian",
 			flag:"it",
 			text:"Italian"
 		},
 		{
 			key:"in",
 			value:"in",
+      name:"Indian",
 			flag:"in",
 			text:"Indian"
 		},
 		{
 			key:"cn",
 			value:"cn",
+      name:"Chinese",
 			flag:"cn",
 			text:"Chinese"
 		}
-
 ]
 
 const InfoHeader =(props) =>{
@@ -48,11 +51,11 @@ const InfoHeader =(props) =>{
       	randomMeal ={props.randomMeal}
       	chooseRandom = {props.chooseRandom}
       	addNewDinner = {props.addNewDinner}
-      	ethnicSort={props.ethnicSort}
+      	ethnicType={props.ethnicType}
       	handleEthnicityChange={props.handleEthnicityChange}
       	viewAll={props.viewAll}
       	inputTest={props.inputTest}
-      	inputChange={props.inputChange}
+      	change={props.change}
       	handleKeyDown={props.handleKeyDown}
       />
     </Segment.Group>
@@ -69,8 +72,9 @@ const Banner = (props) => {
           <h1 className="headline"> 
           <Image size="small" src = '../images/utensilsBlack.jpg'avatar />
             What 's For Dinner 
-            <Flag name='ae' />
-            <Flag name="mx"/>
+            
+
+
           </h1>
         </Segment>
         <Segment>
@@ -120,12 +124,26 @@ const Navbar = (props) => {
 		            </h4> 
 	  					</Menu.Item>
               <Menu.Item>
-                <Button className="bubba" icon labelPosition='left' onClick={props.viewAll}>
+                <Button className="showAll" icon labelPosition='left' onClick={props.viewAll}>
                   <Icon name='food' />
                   View All
                 </Button>
               </Menu.Item>
-              	<EthnicChoice />
+              <Menu.Item>
+                <Dropdown 
+                    floating
+                    labeled
+                    className="icon"
+                    icon="flag"
+                    iconPosition="left"
+                    size="tiny"
+                    onChange={props.handleEthnicityChange}
+                    options={EthnicChoices}
+                    placeholder='Select Ethnic Type'  
+                    selection
+                    value={props.ethnicType}
+                />
+              </Menu.Item>
               <Menu.Item >
                 <Button onClick={props.addNewDinner} icon labelPosition = 'left' >
                    <Icon name = 'plus circle' />
@@ -138,7 +156,7 @@ const Navbar = (props) => {
                 	type="text"
                 	placeholder="Dinner Wish" 
                 	value={props.inputTest} 
-                	onChange={(e) => props.inputChange(e)} 
+                	onChange={(e) => props.change(e)} 
                 	// onChange={(e) => {console.log(e.target.value)}}
                 	// onKeyDown={props.handleKeyDown}
                 	icon="plus circle" 
@@ -152,35 +170,12 @@ const Navbar = (props) => {
   );
 }
 
-const EthnicChoice = (props) => {
-	return(
 
-			<Menu.Item>
-				<Dropdown text = "Ethnic Choice" icon = "flag"
-					floating labeled button className = "icon" onClick={props.handleEthnicityChange} >
-					<Dropdown.Menu>
-						<Dropdown.Header>
-							<Dropdown.Item
-								label = { { flag: 'mx' } } Flag name="mx" key="Mexican" text = 'Mexican' value="Mexican">
-							</Dropdown.Item>
-							<Dropdown.Item
-								label = { { color: 'blue', empty: true, circular: true } } key="American" text="American" value="American">
-							</Dropdown.Item>
-							<Dropdown.Item
-								label = { { color: 'orange', empty: true, circular: true } } key="Asian" text="Asian" value="Asian">
-							</Dropdown.Item>
-							<Dropdown.Item
-								label = { { color: 'red', empty: true, circular: true } } key="Italian" text = "Italian" value="Italian">
-							</Dropdown.Item>
-							<Dropdown.Item
-								label = { { name: 'India' } } key="Indian" text = 'Indian' value="Indian">
-							</Dropdown.Item>
-						</Dropdown.Header>
-					</Dropdown.Menu>
-				</Dropdown>
-			</Menu.Item>
-		);
-}
+// const EthnicChoice = (props) => {
+// 	return(
+//         <Dropdown className="icon" icon='flag' iconPosition="left" placeholder='Select Ethnic Type' floating labeled selection options={EthnicChoices} />
+// 		);
+// }
 
 const flagRenderer = item => {
 	return(
@@ -188,12 +183,5 @@ const flagRenderer = item => {
 	);
 }
 
-const EthnicSelect =(props) => {
-	return(
-		<Select placeholder="Choose Type"
-			options = {EthnicChoices}
-		/>
-		);
-}
 
 export default InfoHeader;
