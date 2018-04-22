@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Form} from 'semantic-ui-react';
+import { Container} from 'semantic-ui-react';
 import InfoHeader from './InfoHeader/InfoHeader';
 import CardList from './CardGroup/CardList';
 import FormInput from './Form/addDinnerForm';
@@ -79,7 +79,6 @@ class ParentComponent extends Component {
     display:false
   }
 
-
   chooseRandom = (e) => {
     e.preventDefault();
     let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
@@ -95,6 +94,34 @@ class ParentComponent extends Component {
       });
         console.log(e.target.value)
     }
+
+  onSubmit = (e) => {
+    e.preventDefault
+    console.log(this.state);
+    // this.props.onSubmit (this.state)
+    this.setState({
+      meal:this.state.meal,
+      ethnicity:this.state.ethnicity,
+      description:this.state.description,
+      image:this.state.image,
+      display:"false"
+    })
+    console.log(this.state);
+  }
+
+  handleAddDinner = (e) => {
+    e.preventDefault
+    this.setState({
+      dinners: this.state.dinners.concat([
+        { meal: this.state.meal,
+          ethnicity: this.state.ethnicity,
+          description: this.state.description,
+          image:this.state.image,
+          display:"false"
+        }
+      ])
+    });
+  }
 
   handleChange = (e, { value }) => this.setState({ value })
 
@@ -113,6 +140,7 @@ class ParentComponent extends Component {
     console.log(data.value);
      this.setState({ethnicType: data.value});
      console.log(this.state.ethnicType);
+
     }
       
    viewAll = (e) => {
@@ -149,19 +177,7 @@ class ParentComponent extends Component {
     });
   }
 
-  onSubmit = (e) => {
-    e.preventDefault
-    console.log(this.state);
-    // this.props.onSubmit (this.state)
-    this.setState({
-      meal:"",
-      ethnicity:"",
-      description:"",
-      image:"",
-      display:false
-    })
-    console.log(this.state);
-  }
+
 
 
   handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
@@ -183,7 +199,7 @@ removeDinner(index) {
  */
 
   render() {
-    const { randomMeal, dinners, currentChoices, ethnicType, inputTest, meal, ethnicity, description, image, display} = this.state;
+    const { randomMeal, dinners, currentChoices, ethnicType, inputTest, meal, ethnicity, description, image} = this.state;
     return(
       <div>
         <InfoHeader
@@ -205,17 +221,16 @@ removeDinner(index) {
             handleRate={null}
             removeDinner={this.removeDinner}
           />
+        </Container>
           <FormInput
+            dinners={dinners}
             meal={meal}
             ethnicity={ethnicity}
             description={description}
             image={image}
-            display={false}
             change={this.change}
-            onSubmit={this.onSubmit}
-            display={display}
-          />
-        </Container>
+            onSubmit={this.onSubmit}           
+          />  
       </div>
 
     );

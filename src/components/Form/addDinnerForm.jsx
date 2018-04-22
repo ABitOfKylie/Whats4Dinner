@@ -48,12 +48,15 @@ const FormInput =(props) => {
           </Header.Content>
         </Header>
       <Segment className="formContent"stacked>
-        <Form  size="large">
+        <Form  size="large" onSubmit={props.handleAddDinner}>
           <Form.Group widths="equal">
             <Form.Input
                 fluid
                 label="Dinner Name"
                 placeholder="Enter New Meal Choice"
+                name="meal"
+                value={props.meal}
+                onChange={props.change}
             >
             </Form.Input>
             <Form.Select
@@ -61,6 +64,9 @@ const FormInput =(props) => {
                 label="Ethnicity"
                 options={EthnicChoices}
                 placeholder="Ethnicity"
+                name="ethnicity"
+                value={props.ethnicity}
+                onChange={props.change}
             >
             </Form.Select>
           </Form.Group>
@@ -69,15 +75,22 @@ const FormInput =(props) => {
                 rows="3"
                 label="Description"
                 placeholder="Enter Meal Description"
+                name="description"
+                value={props.description}
+                onChange={props.change}
           >
           </Form.TextArea>
           <Form.Input
               label="Image"
-              image="image" 
+              image="image"
               type="text" 
-              placeholder="Enter Meal Image example: http://...">
+              name="image"
+              value={props.image}
+              onChange={props.change}
+              placeholder="Enter Meal Image example: http://..."
+            >
           </Form.Input>
-          <Form.Button fluid onSubmit={props.change}>
+          <Form.Button fluid type="submit">
               Submit
           </Form.Button>
         </Form>
