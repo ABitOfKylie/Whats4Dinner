@@ -6,30 +6,35 @@ const EthnicChoices = [
     {
       key:"Mexican",
       name:"Mexican",
+      value:"Mexican",
       flag:"mx",
       text:"Mexican"
     },
     {
       key:"American",
       name:"American",
+      value:"American",
       text:"American",
       flag:"us",
     },
     {
       key:"Italian",
       name:"Italian",
+      value:"Italian",
       flag:"it",
       text:"Italian"
     },
     {
       key:"Indian",
       name:"Indian",
+      value:"Indian",
       flag:"in",
       text:"Indian"
     },
     {
       key:"Chinese",
       name:"Chinese",
+      value:"Chinese",
       flag:"cn",
       text:"Chinese"
     }
@@ -48,7 +53,7 @@ const FormInput =(props) => {
           </Header.Content>
         </Header>
       <Segment className="formContent"stacked>
-        <Form  size="large" onSubmit={props.handleAddDinner}>
+        <Form  size="large" onSubmit={props.addNewDinner}>
           <Form.Group widths="equal">
             <Form.Input
                 fluid
@@ -65,8 +70,7 @@ const FormInput =(props) => {
                 options={EthnicChoices}
                 placeholder="Ethnicity"
                 name="ethnicity"
-                value={props.ethnicity}
-                onChange={props.change}
+                onChange={props.handleEthnicityChange}
             >
             </Form.Select>
           </Form.Group>

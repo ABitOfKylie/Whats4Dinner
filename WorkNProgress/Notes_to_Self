@@ -15,7 +15,7 @@ CSS: (Semantic is frustrating)
   RandomPick Button updates State no longer displays card
   
   Parent Component: 
-    line 82: chooseRandom()
+    line 83: chooseRandom()
     line 191: passed to InfoHeader
     line 190: randomMeal in State, Const and passed to InfoH
   InfoHeader Component:
@@ -29,7 +29,7 @@ CSS: (Semantic is frustrating)
 
 View All Button  - is connected correctly
   Parent Component:
-    line 117: viewAll function
+    line 92: viewAll function
     line 195: passed to InfoHeader
   InfoHeader Component: /Navbar
     line 56: passed to Navbar
@@ -40,7 +40,7 @@ View All Button  - is connected correctly
 
 Ethnicity Dropdown - 
 is connected,Flags are working!!! updates state EthnicType
-
+Clear on Submit working for all but Select Element.
 Const Ethnic Choices [
     {
       key:"mx",
@@ -58,34 +58,30 @@ Const Ethnic Choices [
 currently in InfoHeader eventually should be moved to Parent Component and thereafter to Store
 
 Parent Component:
-  line 110 handleEthnicityChange function
-  line 139 function passed to InfoHeader
+  line 105 handleEthnicityChange function
   line 73, 186 ethnicType incl. in state and const
-  line 194 passed to InfoHeader
+  line 195 passed to InfoHeader/Nav
 InfoHeader:
   line 133-144 Dropdown Menu 
 
 Problem:
-  1. Remember to Clear on Submit (can't find in docs)
-  2. right now Select Dropdown sends the data value as the flag "in" this won't match dinners.ethnicity "Indian"
-  3. Fix handleEthnicityChange to include
+  
+  1. Fix handleEthnicityChange to include
       dinners.filter
       Again - Card List Display
 
+  2. clearForm on Submit works for all but select element.
+  
 
-/*handleEthnicityChange = (e, data) => {
+    handleEthnicityChange = (e, data) => {
     e.preventDefault
     console.log(data.value);
-    this.setState({ethnicType:data.value});
+    this.setState({ethnicity:data.value});
   
-    then I'd like to do something like this
+    I'd like to do something like this
     if dinners.ethnicity is equal to 
     data.value passed from the Select element then
     map the array and display appropriate cards
-
-    **** problem: Select is returning flag property "mx"
-    not value or key which is say "Mexican" which
-    would match dinner.ethnicity
 
      let ethnicChoice = dinners.map(data =>
       if(dinners.ethnicity == props.ethnicType){
@@ -93,37 +89,29 @@ Problem:
       }
     }; */
 
+https://react.semantic-ui.com/collections/form#form-example-subcomponent-control
 ------------------------------------------
 
 Add A Meal Button - 
 What does work:
-It is connected, adds Obj to dinner Array, # of current choices is updated and an additional blank card is displayed. 
+It is connected, adds an empty Obj to dinner Array, # of current choices is updated and an additional blank card is displayed. The clear function 'clearForm' works clears/sets all related state properties to "" BUT does not affect the Select element.
 
 Problem/Goal: 
 Add A Meal Button should display addDinnerForm while hiding the dinner cards. Once submitted - form clears, disappears and cards reappear. (one day will use fade in/out)
 
 ParentComponent:
-  line 91: function change
-  line 131: function addNewDinner
+  line 114: function change
+  line 139: function addNewDinner
 InfoHeader:
   line 148: Button props.addNewDinner
 addDinnerForm:
   line 51: Form onSubmit={props.change}  neither work
   line 80: Button onSubmit={props.change
 
-  1. Function Help
-      right now only an empty object is added to newArray
-      no connection with addDinnerForm
+  1. Function Help  addNewDinner
+      right now only an empty object is added to dinners array
 
-Question:
-  Unsure of placement to connect 'things'
-  Can't see where to pass onSubmit function in the addDinnerForm 
 
-  Steps taken: 
-ParentComponent:
-import FormInput from './Form/addDinnerForm';
-added to state the fields of the form: rating, meal, ethnicity, description and image - not sure if necessary
-line 208: added Form Component and related functions & state items
 
 
 

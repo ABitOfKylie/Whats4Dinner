@@ -79,6 +79,7 @@ class ParentComponent extends Component {
     display:false
   }
 
+/* **********  Navbar Methods **************** */
   chooseRandom = (e) => {
     e.preventDefault();
     let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
@@ -88,12 +89,39 @@ class ParentComponent extends Component {
     console.log(chosenMeal);
   }
 
+   viewAll = (e) => {
+    this.state.dinners.map(dinner => {
+     /* <DinnerCard 
+      key={dinner.index} 
+      meal={dinner.meal} 
+      description={dinner.description} 
+      image={dinner.image} 
+      ethnicity={dinner.ethnicity} 
+      /> */
+      console.log("button was clicked");
+    });
+  }
+
+  handleEthnicityChange = (e, data) => {
+    e.preventDefault
+    console.log(data.value);
+     this.setState({ethnicity: data.value});
+     console.log(this.state.ethnicity);
+
+    }
+
+/* **********  Form Related Methods **************** */
+
   change = (e) => {
       this.setState({
         [e.target.name]:e.target.value 
+
       });
         console.log(e.target.value)
     }
+
+  handleChange = (e, { value }) => this.setState({ value })
+
 
   onSubmit = (e) => {
     e.preventDefault
@@ -109,7 +137,21 @@ class ParentComponent extends Component {
     console.log(this.state);
   }
 
-  handleAddDinner = (e) => {
+ addNewDinner = (e, data) => {
+    console.log("add button has been clicked");
+    let updated = this.state.dinners.slice();
+    updated.push("");
+    this.setState({dinners:updated});
+    console.log("dinners new state:" + {dinners})
+    console.log("Here comes the clear");
+    this.clearForm();
+  }
+
+
+  clearForm = () => this.setState({ meal: "", description: "", image:"", ethnicity:"" })
+
+
+  /*handleAddDinner = (e) => {
     e.preventDefault
     this.setState({
       dinners: this.state.dinners.concat([
@@ -121,64 +163,9 @@ class ParentComponent extends Component {
         }
       ])
     });
-  }
+  } */
 
-  handleChange = (e, { value }) => this.setState({ value })
-
-  chooseRandom = (e) => {
-    e.preventDefault();
-    let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
-    console.log(randomChoice);
-    let chosenMeal = randomChoice.meal;
-    this.setState({randomMeal:chosenMeal});
-    console.log(chosenMeal);
-  }
-
-
-  handleEthnicityChange = (e, data) => {
-    e.preventDefault
-    console.log(data.value);
-     this.setState({ethnicType: data.value});
-     console.log(this.state.ethnicType);
-
-    }
-      
-   viewAll = (e) => {
-    this.state.dinners.map(dinner => {
-     /* <DinnerCard 
-      key={dinner.index} 
-      meal={dinner.meal} 
-      description={dinner.description} 
-      image={dinner.image} 
-      ethnicity={dinner.ethnicity} 
-      /> */
-      console.log("button was clicked");
-    });
-  }
-
-  addNewDinner = (e) => {
-    console.log("add button has been clicked");
-    let updated = this.state.dinners.slice();
-    updated.push("");
-    this.setState({dinners:updated});
-    console.log("dinners new state:" + {dinners})
-  }
-
-  handleAddDinner = () => {
-    this.setState({
-      dinners: this.state.dinners.concat([
-        { meal: "",
-          ethnicity: "",
-          description: "",
-          image:"",
-          display:false
-        }
-      ])
-    });
-  }
-
-
-
+/* **********  Card Related Methods **************** */
 
   handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
 
@@ -186,7 +173,6 @@ class ParentComponent extends Component {
      let filteredArray = this.state.dinners.filter(index => index !== e.target.value)
      this.setState({dinners: filteredArray});
  } 
-
 
 
 removeDinner(index) {  
@@ -207,12 +193,11 @@ removeDinner(index) {
           randomMeal={randomMeal}
           chooseRandom={this.chooseRandom}
           addNewDinner={this.addNewDinner}
-          ethnicType={ethnicType}
+          ethnicity={ethnicity}
           handleEthnicityChange={this.handleEthnicityChange}
           viewAll={this.viewAll}
           inputTest={inputTest}
           change={this.change}
-          handleKeyDown={this.handleKeyDown}
         />
         <Container>
           <CardList
@@ -229,7 +214,9 @@ removeDinner(index) {
             description={description}
             image={image}
             change={this.change}
-            onSubmit={this.onSubmit}           
+            onSubmit={null} 
+            addNewDinner={this.addNewDinner}
+            handleEthnicityChange={this.handleEthnicityChange}         
           />  
       </div>
 

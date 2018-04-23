@@ -4,35 +4,35 @@ import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, 
 const EthnicChoices = [
 		{
 			key:"mx",
-			value:"mx",
+			value:"Mexican",
       name:"Mexican",
 			flag:"mx",
 			text:"Mexican"
 		},
 		{
 			key:"us",
-			value:"us",
+			value:"American!",
 			name:"American",
 			text:"American",
 			flag:"us",
 		},
 		{
 			key:"it",
-			value:"it",
+			value:"Italian",
       name:"Italian",
 			flag:"it",
 			text:"Italian"
 		},
 		{
 			key:"in",
-			value:"in",
+			value:"Indian",
       name:"Indian",
 			flag:"in",
 			text:"Indian"
 		},
 		{
 			key:"cn",
-			value:"cn",
+			value:"Chinese",
       name:"Chinese",
 			flag:"cn",
 			text:"Chinese"
@@ -51,12 +51,11 @@ const InfoHeader =(props) =>{
       	randomMeal ={props.randomMeal}
       	chooseRandom = {props.chooseRandom}
       	addNewDinner = {props.addNewDinner}
-      	ethnicType={props.ethnicType}
+      	ethnicity={props.ethnicity}
       	handleEthnicityChange={props.handleEthnicityChange}
       	viewAll={props.viewAll}
       	inputTest={props.inputTest}
       	change={props.change}
-      	handleKeyDown={props.handleKeyDown}
       />
     </Segment.Group>
 	</div>
@@ -141,7 +140,7 @@ const Navbar = (props) => {
                     options={EthnicChoices}
                     placeholder='Select Ethnic Type'  
                     selection
-                    value={props.ethnicType}
+                    value={props.ethnicity}
                 />
               </Menu.Item>
               <Menu.Item >
