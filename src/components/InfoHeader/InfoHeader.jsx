@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, Flag, Select, Input } from 'semantic-ui-react';
+import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, Input } from 'semantic-ui-react';
 
 const EthnicChoices = [
 		{
@@ -11,7 +11,7 @@ const EthnicChoices = [
 		},
 		{
 			key:"us",
-			value:"American!",
+			value:"American",
 			name:"American",
 			text:"American",
 			flag:"us",
@@ -131,10 +131,10 @@ const Navbar = (props) => {
               <Menu.Item>
                 <Dropdown 
                     floating
-                    labeled
+                    label="Ethnicity"
+                    button
                     className="icon"
                     icon="flag"
-                    iconPosition="left"
                     size="tiny"
                     onChange={props.handleEthnicityChange}
                     options={EthnicChoices}
@@ -169,18 +169,6 @@ const Navbar = (props) => {
   );
 }
 
-
-// const EthnicChoice = (props) => {
-// 	return(
-//         <Dropdown className="icon" icon='flag' iconPosition="left" placeholder='Select Ethnic Type' floating labeled selection options={EthnicChoices} />
-// 		);
-// }
-
-const flagRenderer = item => {
-	return(
-	<Flag name={item.countryCode} />
-	);
-}
 
 
 export default InfoHeader;

@@ -2,10 +2,9 @@ Starting at Navbar and moving down
 
 What I really need help on: 
   New function in Card List to cover all 3 scenarios
+  Random Pick, View All and filter by chosen Ethnicity
 
-  Help understanding how to pass data from the total form incl. the select dropdown as an obj including properties to dinner array.
-
-  oh - and how to connect the addDinnerForm to the addNewDinner function which is triggered by the Add A Meal button in the Infoheader.
+  Help understanding how to pass data from the total form incl. the select dropdown as an obj that includes properties to dinner array.  Notes start line 92
 
 
 CSS: (Semantic is frustrating)
@@ -22,9 +21,6 @@ CSS: (Semantic is frustrating)
     line 51,52: both passed to Navbar Line 51,52
     line 116: button using props.chooseRandom
 
-  Problem CardList  needs rewriting.
-    skip tertiary
-    3 scenarios:  Random Pick, View All and Ethnicity Filter 
 ------------------------------------------
 
 View All Button  - is connected correctly
@@ -39,7 +35,7 @@ View All Button  - is connected correctly
 ------------------------------------------
 
 Ethnicity Dropdown - 
-is connected,Flags are working!!! updates state EthnicType
+is connected,Flags are working!!! updates state ethnicity
 Clear on Submit working for all but Select Element.
 Const Ethnic Choices [
     {
@@ -59,7 +55,7 @@ currently in InfoHeader eventually should be moved to Parent Component and there
 
 Parent Component:
   line 105 handleEthnicityChange function
-  line 73, 186 ethnicType incl. in state and const
+  line 73, 186 ethnicity incl. in state and const
   line 195 passed to InfoHeader/Nav
 InfoHeader:
   line 133-144 Dropdown Menu 
@@ -67,7 +63,7 @@ InfoHeader:
 Problem:
   
   1. Fix handleEthnicityChange to include
-      dinners.filter
+      dinners.filter ?
       Again - Card List Display
 
   2. clearForm on Submit works for all but select element.
@@ -84,20 +80,57 @@ Problem:
     map the array and display appropriate cards
 
      let ethnicChoice = dinners.map(data =>
-      if(dinners.ethnicity == props.ethnicType){
+      if(props.dinners.ethnicity == ethnicity){ what?
       console.log(ethnicChoice);
       }
     }; */
 
 https://react.semantic-ui.com/collections/form#form-example-subcomponent-control
+
 ------------------------------------------
 
 Add A Meal Button - 
-What does work:
-It is connected, adds an empty Obj to dinner Array, # of current choices is updated and an additional blank card is displayed. The clear function 'clearForm' works clears/sets all related state properties to "" BUT does not affect the Select element.
 
-Problem/Goal: 
-Add A Meal Button should display addDinnerForm while hiding the dinner cards. Once submitted - form clears, disappears and cards reappear. (one day will use fade in/out)
+Goal: 
+Add A Meal Button -triggers modal which contains Form Once submitted - form clears, and modal closes
+
+Problem:
+  addNewDinner method is connected, however it adds an empty Obj to dinner Array, # of current choices is updated and an additional blank card is displayed.
+
+  minor issue clearForm function does not affect the Dropdown element
+
+  closeModal = () => {
+    this.setState({ showModal: false })
+  }
+
+  Form onChange calls the change method
+    change = (e) => {
+      this.setState({
+        [e.target.name]:e.target.value 
+
+      });
+        console.log(e.target.value)
+    }
+
+    this sets the state of any / all values passed thru
+
+    BUT!!!! these are individual properties not contained within an object.
+
+  Form on Submit - addNewMeal
+
+   addNewDinner = (e) => {
+    e.preventDefault
+    console.log("add button has been clicked");
+    let updated = this.state.dinners.slice();
+    updated.push("");
+    this.setState({dinners:updated});
+    console.log("dinners new state:" + {dinners})
+    console.log("Here comes the clear");
+    this.clearForm();
+    this.closeModal();
+  }
+
+  right now this is just adding an empty object to array
 
 ParentComponent:
   line 114: function change
@@ -105,18 +138,116 @@ ParentComponent:
 InfoHeader:
   line 148: Button props.addNewDinner
 addDinnerForm:
-  line 51: Form onSubmit={props.change}  neither work
-  line 80: Button onSubmit={props.change
+  line 56: Form onSubmit={props.addNewDinner}
+  line 97: Button type="Submit"
 
   1. Function Help  addNewDinner
       right now only an empty object is added to dinners array
 
+      ??? Try something like this instead of addNewDinner
+  handleAddDinner(dinner){
+    this.setState({
+      dinners:[...this.state.dinners, dinner]});
+  }
+
+  *********************** Form Submission *************
+  ???????  this is just junk attempts.
+  handleChangeForms = (e, { value }) => {
+    this.setState({ 
+        dinners.meal: value,
+        dinners.ethnicity:value,
+        dinners.description: value,
+        dinners.image:value
+     });
+  }
+
+Classic only handles one specific value. 
+  handleChangeFormsExample = (e, { value }) => {
+    this.setState({ something: value });
+  } 
 
 
+  /*handleAddDinner = (e) => {
+    e.preventDefault
+    this.setState({
+      dinners: this.state.dinners.concat([
+        { meal: this.state.meal,
+          ethnicity: this.state.ethnicity,
+          description: this.state.description,
+          image:this.state.image,
+          display:"false"
+        }
+      ])
+    });
+  } */
+
+---------------------- Card Functions -------------------
+  handleRemoveDinner(index){
+    this.setState({
+      dinners:this.state.dinners.filter(function(e, i){
+        return i !== index;
+      })
+    });
+  }
+  or
+  removeDinner(e, i) {
+     let filteredArray = this.state.dinners.filter(index => index !== e.target.value)
+     this.setState({dinners: filteredArray});
+ } 
+
+--------------------------------------------------------
+3 functions guide the card display.
+How to fix Card List to accomodate this.
+
+Idea below, code broken. if, if, else
 
 
+import DinnerCard from './DinnerCard';
 
+const CardList = (props) => {
+  return (
+        <Card.Group equal itemsPerRow={4}>
 
+          if(dinner.meal === props.randomMeal) {
+            props.dinners.filter((dinner, index) => (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            ))
+          }
+          if(dinner.ethnicity === props.ethnicity){
+            return (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            );
+          }
+          else{
+            props.dinners.map((dinner, index) => (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            ))
+          }
+        })
+
+    </Card.Group>
+  );
+}
+
+export default CardList;
 
 
 

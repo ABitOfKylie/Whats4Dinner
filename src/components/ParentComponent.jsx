@@ -70,13 +70,13 @@ class ParentComponent extends Component {
     randomMeal: null,
     dinners: dinners,
     rating: null,
-    ethnicType:null,
     inputTest:"",
     meal:"",
     ethnicity:"",
     description:"",
     image:"",
-    display:false
+    display:false,
+    showModal:false
   }
 
 /* **********  Navbar Methods **************** */
@@ -91,13 +91,13 @@ class ParentComponent extends Component {
 
    viewAll = (e) => {
     this.state.dinners.map(dinner => {
-     /* <DinnerCard 
+     <DinnerCard 
       key={dinner.index} 
       meal={dinner.meal} 
       description={dinner.description} 
       image={dinner.image} 
       ethnicity={dinner.ethnicity} 
-      /> */
+      /> 
       console.log("button was clicked");
     });
   }
@@ -109,8 +109,8 @@ class ParentComponent extends Component {
      console.log(this.state.ethnicity);
 
     }
+/* **********  Modal Form Related Methods **************** */
 
-/* **********  Form Related Methods **************** */
 
   change = (e) => {
       this.setState({
@@ -120,24 +120,8 @@ class ParentComponent extends Component {
         console.log(e.target.value)
     }
 
-  handleChange = (e, { value }) => this.setState({ value })
-
-
-  onSubmit = (e) => {
+ addNewDinner = (e) => {
     e.preventDefault
-    console.log(this.state);
-    // this.props.onSubmit (this.state)
-    this.setState({
-      meal:this.state.meal,
-      ethnicity:this.state.ethnicity,
-      description:this.state.description,
-      image:this.state.image,
-      display:"false"
-    })
-    console.log(this.state);
-  }
-
- addNewDinner = (e, data) => {
     console.log("add button has been clicked");
     let updated = this.state.dinners.slice();
     updated.push("");
@@ -145,35 +129,19 @@ class ParentComponent extends Component {
     console.log("dinners new state:" + {dinners})
     console.log("Here comes the clear");
     this.clearForm();
+    this.closeModal();
   }
 
 
   clearForm = () => this.setState({ meal: "", description: "", image:"", ethnicity:"" })
 
-
-  /*handleAddDinner = (e) => {
-    e.preventDefault
-    this.setState({
-      dinners: this.state.dinners.concat([
-        { meal: this.state.meal,
-          ethnicity: this.state.ethnicity,
-          description: this.state.description,
-          image:this.state.image,
-          display:"false"
-        }
-      ])
-    });
-  } */
+  closeModal = () => {
+    this.setState({ showModal: false })
+  }
 
 /* **********  Card Related Methods **************** */
 
   handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
-
-/* removeDinner(e, i) {
-     let filteredArray = this.state.dinners.filter(index => index !== e.target.value)
-     this.setState({dinners: filteredArray});
- } 
-
 
 removeDinner(index) {  
   this.setState({
@@ -182,10 +150,10 @@ removeDinner(index) {
     })
   });
 }
- */
+
 
   render() {
-    const { randomMeal, dinners, currentChoices, ethnicType, inputTest, meal, ethnicity, description, image} = this.state;
+    const { randomMeal, dinners, currentChoices, inputTest, meal, ethnicity, description, image, showModal} = this.state;
     return(
       <div>
         <InfoHeader

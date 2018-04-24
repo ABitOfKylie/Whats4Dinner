@@ -11,7 +11,10 @@
 #232b2b soft black
 #3b444b softer black
 #414a4c softest black / dark gray
-#A0A4A5 light gray*/
+#A0A4A5 light gray
+
+Font Families Lora Roboto &  Rock Salt" 
+*/
 
 
 
@@ -98,6 +101,11 @@ p {
     overflow: hidden;
 }
 
+.ui.card .meta{
+		font-size:24px;
+		color:rgba(140, 0, 4, .5);
+		font-family: Lora;
+}
 .ui.card>.content>.description {
 		display:flex;
   	margin-top: .5em;

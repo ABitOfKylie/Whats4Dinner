@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Header, Icon, Form, Segment, Grid, Flag } from 'semantic-ui-react'
+import {Header, Icon, Form, Segment, Grid} from 'semantic-ui-react'
 
 
 const EthnicChoices = [
