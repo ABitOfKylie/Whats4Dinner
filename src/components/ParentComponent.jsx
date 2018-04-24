@@ -111,7 +111,6 @@ class ParentComponent extends Component {
     }
 /* **********  Modal Form Related Methods **************** */
 
-
   change = (e) => {
       this.setState({
         [e.target.name]:e.target.value 
@@ -124,14 +123,21 @@ class ParentComponent extends Component {
     e.preventDefault
     console.log("add button has been clicked");
     let updated = this.state.dinners.slice();
-    updated.push("");
+      const newDinner = {
+        meal: this.state.meal,
+        ethnicity: this.state.ethnicity,
+        description: this.state.description,
+        image:this.state.image,
+        display: false,
+        id: this.state.dinners.length + 1
+    }
+    updated.push(newDinner);
     this.setState({dinners:updated});
     console.log("dinners new state:" + {dinners})
     console.log("Here comes the clear");
     this.clearForm();
     this.closeModal();
   }
-
 
   clearForm = () => this.setState({ meal: "", description: "", image:"", ethnicity:"" })
 
