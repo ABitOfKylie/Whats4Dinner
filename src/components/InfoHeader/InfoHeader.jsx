@@ -40,14 +40,15 @@ const EthnicChoices = [
 ]
 
 const InfoHeader =(props) =>{
-	return(  
+	return(
 		<div className="InfoHeader">
     <Segment.Group raised>
-      <Banner 
+      <Banner
       	dinners = {props.dinners}
       	currentChoices = {props.currentChoices}
       />
       <Navbar
+		  updateDisplayType={props.updateDisplayType}
       	randomMeal ={props.randomMeal}
       	chooseRandom = {props.chooseRandom}
       	addNewDinner = {props.addNewDinner}
@@ -68,18 +69,15 @@ const Banner = (props) => {
     <div className="banner">
       <Segment.Group horizontal raised >
         <Segment>
-          <h1 className="headline"> 
+          <h1 className="headline">
           <Image size="small" src = '../images/utensilsBlack.jpg'avatar />
-            What 's For Dinner 
-            
-
-
+            Whats For Dinner
           </h1>
         </Segment>
         <Segment>
-					<Stat 
+					<Stat
 					currentChoices={props.currentChoices}
-					/>				
+					/>
 				</Segment>
       </Segment.Group>
     </div>
@@ -94,12 +92,12 @@ const Stat = (props) => {
         <Statistic color="black" >
           <Statistic.Value>
             <Icon color = "red" name="food" size="small"/>
-            <span>: </span>            
-              {props.currentChoices} 
+            <span>: </span>
+              {props.currentChoices}
           </Statistic.Value>
           <Statistic.Label >Dinner Choices</Statistic.Label>
         </Statistic>
-      </Header> 
+      </Header>
     </div>
     );
 }
@@ -112,24 +110,33 @@ const Navbar = (props) => {
           <Grid.Column >
             <Menu secondary pointing >
               <Menu.Item >
-	             	<Button className="barButton" icon labelPosition="left" onClick={props.chooseRandom}>
+				  <Button
+					  className="barButton"
+					  icon
+					  labelPosition="left"
+					  onClick={() => {
+							  props.updateDisplayType('random')
+							  props.chooseRandom
+						  }
+					  }
+				  >
 	             		<Icon name='food' />
 	              	Random Pick
 	              </Button>
               </Menu.Item>
               <Menu.Item>
 			  				<h4>
-		              {props.randomMeal}              
-		            </h4> 
+		              {props.randomMeal}
+		            </h4>
 	  					</Menu.Item>
               <Menu.Item>
-                <Button className="showAll" icon labelPosition='left' onClick={props.viewAll}>
+                <Button className="showAll" icon labelPosition='left' onClick={() => props.updateDisplayType('all')}>
                   <Icon name='food' />
                   View All
                 </Button>
               </Menu.Item>
               <Menu.Item>
-                <Dropdown 
+                <Dropdown
                     floating
                     label="Ethnicity"
                     button
@@ -138,7 +145,7 @@ const Navbar = (props) => {
                     size="tiny"
                     onChange={props.handleEthnicityChange}
                     options={EthnicChoices}
-                    placeholder='Select Ethnic Type'  
+                    placeholder='Select Ethnic Type'
                     selection
                     value={props.ethnicity}
                 />
@@ -147,24 +154,24 @@ const Navbar = (props) => {
                 <Button onClick={props.addNewDinner} icon labelPosition = 'left' >
                    <Icon name = 'plus circle' />
                    Add a meal
-                </Button> 
-              </Menu.Item> 
+                </Button>
+              </Menu.Item>
               <Menu.Item >
-                <Input 
-                	name="inputTest" 
+                <Input
+                	name="inputTest"
                 	type="text"
-                	placeholder="Dinner Wish" 
-                	value={props.inputTest} 
-                	onChange={(e) => props.change(e)} 
+                	placeholder="Dinner Wish"
+                	value={props.inputTest}
+                	onChange={(e) => props.change(e)}
                 	// onChange={(e) => {console.log(e.target.value)}}
                 	// onKeyDown={props.handleKeyDown}
-                	icon="plus circle" 
+                	icon="plus circle"
                 	labelPosition = 'left'
               	/>
-              </Menu.Item> 
-            </Menu> 
-          </Grid.Column> 
-       </Grid> 
+              </Menu.Item>
+            </Menu>
+          </Grid.Column>
+       </Grid>
   </div>
   );
 }
