@@ -21,7 +21,7 @@ let dinners = [
     description:"Penne pasta with spicy tomato sauce.",
     image:"../../images/PenneArrabiata.jpg",
     display:false
-  },  
+  },
   {
     id:3,
     meal:"Lasagna",
@@ -53,7 +53,7 @@ let dinners = [
     description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
     image:"../../images/FriedChicken.jpg",
     display:false
-  },   
+  },
   {
     id:7,
     meal:"Hamburgers",
@@ -61,25 +61,42 @@ let dinners = [
     description:"A hamburger is a sandwich consisting of a cooked meat patty on a bun or roll. You can order a hamburger, fries, and a shake at most fast food restaurants. Hamburgers are traditionally made with ground beef and served with onions, tomatoes, lettuce, ketchup, and other garnishes.",
     image:"../../images/Hamburger.jpg",
     display:false
-  }   
+  }
 ];
 
-class ParentComponent extends Component {  
-  state = {
-    currentChoices: null,
-    randomMeal: null,
-    dinners: dinners,
-    rating: null,
-    inputTest:"",
-    meal:"",
-    ethnicity:"",
-    description:"",
-    image:"",
-    display:false,
-    showModal:false
-  }
+class ParentComponent extends Component {
+    // added a display type that the cardlist will use to determine what it should display
+    state = {
+        displayType: "all",
+      currentChoices: null,
+      randomMeal: null,
+      dinners: dinners,
+      rating: null,
+      inputTest:"",
+      meal:"",
+      ethnicity:"",
+      description:"",
+      image:"",
+      display:false,
+      showModal:false
+    }
 
-/* **********  Navbar Methods **************** */
+  /* **********  Navbar Methods **************** */
+    // this method will help us update state on displayType which will update what we render in cardlist
+    // The method was passed to navbar and used on random, view all and ethnicity buttons
+    updateDisplayType = (displayType) => {
+      console.log('Navbar Updated to Display', displayType);
+    }
+
+    handleEthnicityChange = (e, data) => {
+        e.preventDefault
+        this.updateDisplayType('ethnicity')
+        console.log(data.value);
+        this.setState({ethnicity: data.value});
+        console.log(this.state.ethnicity);
+
+    }
+
   chooseRandom = (e) => {
     e.preventDefault();
     let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
@@ -91,29 +108,22 @@ class ParentComponent extends Component {
 
    viewAll = (e) => {
     this.state.dinners.map(dinner => {
-     <DinnerCard 
-      key={dinner.index} 
-      meal={dinner.meal} 
-      description={dinner.description} 
-      image={dinner.image} 
-      ethnicity={dinner.ethnicity} 
-      /> 
+     <DinnerCard
+      key={dinner.index}
+      meal={dinner.meal}
+      description={dinner.description}
+      image={dinner.image}
+      ethnicity={dinner.ethnicity}
+      />
       console.log("button was clicked");
     });
   }
 
-  handleEthnicityChange = (e, data) => {
-    e.preventDefault
-    console.log(data.value);
-     this.setState({ethnicity: data.value});
-     console.log(this.state.ethnicity);
-
-    }
 /* **********  Modal Form Related Methods **************** */
 
   change = (e) => {
       this.setState({
-        [e.target.name]:e.target.value 
+        [e.target.name]:e.target.value
 
       });
         console.log(e.target.value)
@@ -149,7 +159,7 @@ class ParentComponent extends Component {
 
   handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
 
-removeDinner(index) {  
+removeDinner(index) {
   this.setState({
     dinners: this.state.dinners.filter(function(e,i){
     return i !== index;
@@ -159,11 +169,12 @@ removeDinner(index) {
 
 
   render() {
-    const { randomMeal, dinners, currentChoices, inputTest, meal, ethnicity, description, image, showModal} = this.state;
+    const { displayType, randomMeal, dinners, currentChoices, inputTest, meal, ethnicity, description, image, showModal} = this.state;
     return(
       <div>
         <InfoHeader
-          currentChoices={dinners.length}          
+            updateDisplayType={this.updateDisplayType}
+          currentChoices={dinners.length}
           randomMeal={randomMeal}
           chooseRandom={this.chooseRandom}
           addNewDinner={this.addNewDinner}
@@ -175,6 +186,7 @@ removeDinner(index) {
         />
         <Container>
           <CardList
+              displayType={displayType}
             randomMeal={this.randomMeal}
             dinners={dinners}
             handleRate={null}
@@ -188,10 +200,10 @@ removeDinner(index) {
             description={description}
             image={image}
             change={this.change}
-            onSubmit={null} 
+            onSubmit={null}
             addNewDinner={this.addNewDinner}
-            handleEthnicityChange={this.handleEthnicityChange}         
-          />  
+            handleEthnicityChange={this.handleEthnicityChange}
+          />
       </div>
 
     );
