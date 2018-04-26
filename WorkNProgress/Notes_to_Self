@@ -31,6 +31,23 @@ View All Button  - is connected correctly
     line 56: passed to Navbar
     line 129: button using props.viewAll
 
+      this.state.dinners.map(dinner => {
+    <DinnerCard>{dinner}<DinnerCard/>
+    })
+      {this.state.todos.map(function(todo) {
+            return <li>{todo}</li>
+       })}
+
+lapsList() {
+
+    this.state.laps.map((data) => {
+      return (
+        <View><Text>{data.time}</Text></View>
+      )
+    })
+
+}
+
   Problem is Display  CardList (same for Ethnicity below)
 ------------------------------------------
 
@@ -180,6 +197,25 @@ Classic only handles one specific value.
       ])
     });
   } */
+
+
+  onSubmit = (e) => {
+    e.preventDefault
+    console.log(this.state);
+    // this.props.onSubmit (this.state)
+    this.setState({
+      meal:this.state.dinners.meal,
+      ethnicity:this.state.dinners.ethnicity,
+      description:this.state.dinner.description,
+      image:this.state.dinners.image,
+      display:"false"
+    })
+    console.log(this.state.dinners);
+  }
+
+  /* let arr = Object.keys(myObject).map(function (i) {
+  return myObject[i];
+});*/
 
 ---------------------- Card Functions -------------------
   handleRemoveDinner(index){

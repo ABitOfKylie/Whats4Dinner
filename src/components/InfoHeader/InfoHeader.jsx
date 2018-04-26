@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, Input } from 'semantic-ui-react';
+import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, Modal, Form } from 'semantic-ui-react';
 
 const EthnicChoices = [
 		{
@@ -54,8 +54,11 @@ const InfoHeader =(props) =>{
       	ethnicity={props.ethnicity}
       	handleEthnicityChange={props.handleEthnicityChange}
       	viewAll={props.viewAll}
-      	inputTest={props.inputTest}
       	change={props.change}
+        showModal={props.showModal}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+
       />
     </Segment.Group>
 	</div>
@@ -71,9 +74,6 @@ const Banner = (props) => {
           <h1 className="headline"> 
           <Image size="small" src = '../images/utensilsBlack.jpg'avatar />
             What 's For Dinner 
-            
-
-
           </h1>
         </Segment>
         <Segment>
@@ -87,7 +87,6 @@ const Banner = (props) => {
 }
 
 const Stat = (props) => {
-	// console.log(props.currentChoices);
   return (
     <div className="DinnerTotal" >
       <Header as = 'h3' floated="right">
@@ -102,6 +101,75 @@ const Stat = (props) => {
       </Header> 
     </div>
     );
+}
+
+const ModalButton = (props) => {
+  return (
+    <Modal closeIcon 
+      trigger={<Button onClick={props.openModal}><Icon className='plus' />Add New Meal Form</Button>}
+      open={props.showModal}
+      onClose={props.closeModal}
+      basic
+      size="small"
+  >
+      <Modal.Header icon='add circle' content='Add New Meal' />
+      <Modal.Content>
+        <Form  id="theForm" size="large" onSubmit={props.addNewDinner}>
+          <Form.Group widths="equal">
+            <Form.Input
+                fluid
+                label="Dinner Name"
+                placeholder="Enter New Meal Choice"
+                name="meal"
+                value={props.meal}
+                onChange={props.change}
+            >
+            </Form.Input>
+            <Form.Select
+                fluid
+                label="Ethnicity"
+                options={EthnicChoices}
+                placeholder="Ethnicity"
+                name="ethnicity"
+                onChange={props.handleEthnicityChange}
+            >
+            </Form.Select>
+          </Form.Group>
+        
+          <Form.TextArea
+                rows="3"
+                label="Description"
+                placeholder="Enter Meal Description"
+                name="description"
+                value={props.description}
+                onChange={props.change}
+          >
+          </Form.TextArea>
+          <Form.Input
+              label="Image"
+              image="image"
+              type="text" 
+              name="image"
+              value={props.image}
+              onChange={props.change}
+              placeholder="Enter Meal Image example: http://..."
+            >
+          </Form.Input>
+          <Form.Button fluid type="submit">
+              Submit
+          </Form.Button> 
+        </Form>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button color='red'onClick={props.closeModal}>
+          <Icon name='remove' /> Never mind
+        </Button>
+        <Button color='green' type="submit" value="submit" form="theForm">
+          <Icon name='checkmark' /> Submit
+        </Button>
+      </Modal.Actions>
+    </Modal>
+  )
 }
 
 const Navbar = (props) => {
@@ -149,19 +217,9 @@ const Navbar = (props) => {
                    Add a meal
                 </Button> 
               </Menu.Item> 
-              <Menu.Item >
-                <Input 
-                	name="inputTest" 
-                	type="text"
-                	placeholder="Dinner Wish" 
-                	value={props.inputTest} 
-                	onChange={(e) => props.change(e)} 
-                	// onChange={(e) => {console.log(e.target.value)}}
-                	// onKeyDown={props.handleKeyDown}
-                	icon="plus circle" 
-                	labelPosition = 'left'
-              	/>
-              </Menu.Item> 
+              <Menu.Item>
+                <ModalButton />
+              </Menu.Item>
             </Menu> 
           </Grid.Column> 
        </Grid> 

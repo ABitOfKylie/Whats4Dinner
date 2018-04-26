@@ -4,6 +4,8 @@ import InfoHeader from './InfoHeader/InfoHeader';
 import CardList from './CardGroup/CardList';
 import FormInput from './Form/addDinnerForm';
 import DinnerCard from './CardGroup/DinnerCard';
+import ModalForm from './Form/addDinnerModal';
+
 
 let dinners = [
   {
@@ -70,7 +72,6 @@ class ParentComponent extends Component {
     randomMeal: null,
     dinners: dinners,
     rating: null,
-    inputTest:"",
     meal:"",
     ethnicity:"",
     description:"",
@@ -102,6 +103,7 @@ class ParentComponent extends Component {
     });
   }
 
+
   handleEthnicityChange = (e, data) => {
     e.preventDefault
     console.log(data.value);
@@ -110,6 +112,7 @@ class ParentComponent extends Component {
 
     }
 /* **********  Modal Form Related Methods **************** */
+
 
   change = (e) => {
       this.setState({
@@ -141,15 +144,20 @@ class ParentComponent extends Component {
 
   clearForm = () => this.setState({ meal: "", description: "", image:"", ethnicity:"" })
 
+  openModal = () => {
+    this.setState({ showModal: true })
+  }
+
   closeModal = () => {
     this.setState({ showModal: false })
   }
 
 /* **********  Card Related Methods **************** */
 
-  handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
+handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
 
-removeDinner(index) {  
+removeDinner(e, index) {  
+  console.log("remove button clicked")
   this.setState({
     dinners: this.state.dinners.filter(function(e,i){
     return i !== index;
@@ -159,7 +167,7 @@ removeDinner(index) {
 
 
   render() {
-    const { randomMeal, dinners, currentChoices, inputTest, meal, ethnicity, description, image, showModal} = this.state;
+    const { randomMeal, dinners, currentChoices, meal, ethnicity, description, image, showModal, rating} = this.state;
     return(
       <div>
         <InfoHeader
@@ -170,8 +178,10 @@ removeDinner(index) {
           ethnicity={ethnicity}
           handleEthnicityChange={this.handleEthnicityChange}
           viewAll={this.viewAll}
-          inputTest={inputTest}
           change={this.change}
+          openModal={this.openModal}
+          closeModal={this.closeModal}
+          showModal={showModal}
         />
         <Container>
           <CardList
@@ -181,6 +191,11 @@ removeDinner(index) {
             removeDinner={this.removeDinner}
           />
         </Container>
+          <DinnerCard
+            removeDinner={this.removeDinner}
+            handleRate={this.handleRate}
+            rating={rating}
+          />
           <FormInput
             dinners={dinners}
             meal={meal}
@@ -192,6 +207,12 @@ removeDinner(index) {
             addNewDinner={this.addNewDinner}
             handleEthnicityChange={this.handleEthnicityChange}         
           />  
+          <ModalForm
+            addNewDinner={this.addNewDinner}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
+            showModal={showModal}
+          />
       </div>
 
     );

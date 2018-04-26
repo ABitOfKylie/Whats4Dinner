@@ -1,9 +1,15 @@
 import React from 'react'
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import { Button, Icon, Modal, Form } from 'semantic-ui-react'
 
 
 const ModalForm= (props) => (
-  <Modal closeIcon onClose={props.closeModal} open={showModal} trigger={<Button onClick{() => this.setState({Show Modal:true})}><Icon className="addCircle"/>Add New Meal</Button>}>
+  <Modal closeIcon 
+    trigger={<Button onClick={props.openModal}><Icon className='plus' />Add New Meal Form</Button>}
+    open={props.showModal}
+    onClose={props.closeModal}
+    basic
+    size="small"
+  >
     <Modal.Header icon='add circle' content='Add New Meal' />
     <Modal.Content>
       <Form  size="large" onSubmit={props.addNewDinner}>
