@@ -34,188 +34,42 @@ View All Button  - is connected correctly
       this.state.dinners.map(dinner => {
     <DinnerCard>{dinner}<DinnerCard/>
     })
-      {this.state.todos.map(function(todo) {
-            return <li>{todo}</li>
+      {this.state.dinners.map(function(dinner) {
+            return <li>{dinner}</li>
        })}
-
-lapsList() {
-
-    this.state.laps.map((data) => {
-      return (
-        <View><Text>{data.time}</Text></View>
-      )
-    })
-
-}
 
   Problem is Display  CardList (same for Ethnicity below)
 ------------------------------------------
 
-Ethnicity Dropdown - 
-is connected,Flags are working!!! updates state ethnicity
-Clear on Submit working for all but Select Element.
-Const Ethnic Choices [
-    {
-      key:"mx",
-      value:"mx",
-      name:"Mexican",
-      flag:"mx"
-      text: "Mexican"
-    }, 
-    {
-    etc.
-    }
 
-] 
 
-currently in InfoHeader eventually should be moved to Parent Component and thereafter to Store
+------------------------------------------
+clearForm does not affect the dropdown menu.
 
-Parent Component:
-  line 105 handleEthnicityChange function
-  line 73, 186 ethnicity incl. in state and const
-  line 195 passed to InfoHeader/Nav
-InfoHeader:
-  line 133-144 Dropdown Menu 
-
-Problem:
-  
-  1. Fix handleEthnicityChange to include
-      dinners.filter ?
-      Again - Card List Display
-
-  2. clearForm on Submit works for all but select element.
-  
-
-    handleEthnicityChange = (e, data) => {
-    e.preventDefault
-    console.log(data.value);
-    this.setState({ethnicity:data.value});
-  
-    I'd like to do something like this
-    if dinners.ethnicity is equal to 
-    data.value passed from the Select element then
-    map the array and display appropriate cards
-
-     let ethnicChoice = dinners.map(data =>
-      if(props.dinners.ethnicity == ethnicity){ what?
-      console.log(ethnicChoice);
-      }
-    }; */
+*************** Form Submission *********************
+Form within Modal - https://github.com/Semantic-Org/Semantic-UI-React/issues/1012
 
 https://react.semantic-ui.com/collections/form#form-example-subcomponent-control
 
-------------------------------------------
+https://github.com/Semantic-Org/Semantic-UI-React/blob/master/docs/app/Examples/collections/Form/Usage/FormExampleCaptureValues.js
 
-Add A Meal Button - 
+React Redux Modals
+https://medium.com/front-end-hacking/react-redux-no-need-to-component-state-for-modals-73871157b52e
 
-Goal: 
-Add A Meal Button -triggers modal which contains Form Once submitted - form clears, and modal closes
+Modal position top corner left cut off.
+Patch solutions recommended by Semantic Org - latest 21 days ago:
+https://github.com/Semantic-Org/Semantic-UI-React/issues/2550  (#2689 points our conflict SUI css v2.24 and v 2.31, old version works.) #2899 => #6185,#2736 => 255x
+temporary solution by frank.boudraa - #2549
 
-Problem:
-  addNewDinner method is connected, however it adds an empty Obj to dinner Array, # of current choices is updated and an additional blank card is displayed.
+.ui.dimmer {
+  display: flex !important;
+}
 
-  minor issue clearForm function does not affect the Dropdown element
+.ui.modal {
+  margin-top: 0;
+}
 
-  closeModal = () => {
-    this.setState({ showModal: false })
-  }
-
-  Form onChange calls the change method
-    change = (e) => {
-      this.setState({
-        [e.target.name]:e.target.value 
-
-      });
-        console.log(e.target.value)
-    }
-
-    this sets the state of any / all values passed thru
-
-    BUT!!!! these are individual properties not contained within an object.
-
-  Form on Submit - addNewMeal
-
-   addNewDinner = (e) => {
-    e.preventDefault
-    console.log("add button has been clicked");
-    let updated = this.state.dinners.slice();
-    updated.push("");
-    this.setState({dinners:updated});
-    console.log("dinners new state:" + {dinners})
-    console.log("Here comes the clear");
-    this.clearForm();
-    this.closeModal();
-  }
-
-  right now this is just adding an empty object to array
-
-ParentComponent:
-  line 114: function change
-  line 139: function addNewDinner
-InfoHeader:
-  line 148: Button props.addNewDinner
-addDinnerForm:
-  line 56: Form onSubmit={props.addNewDinner}
-  line 97: Button type="Submit"
-
-  1. Function Help  addNewDinner
-      right now only an empty object is added to dinners array
-
-      ??? Try something like this instead of addNewDinner
-  handleAddDinner(dinner){
-    this.setState({
-      dinners:[...this.state.dinners, dinner]});
-  }
-
-  *********************** Form Submission *************
-  ???????  this is just junk attempts.
-  handleChangeForms = (e, { value }) => {
-    this.setState({ 
-        dinners.meal: value,
-        dinners.ethnicity:value,
-        dinners.description: value,
-        dinners.image:value
-     });
-  }
-
-Classic only handles one specific value. 
-  handleChangeFormsExample = (e, { value }) => {
-    this.setState({ something: value });
-  } 
-
-
-  /*handleAddDinner = (e) => {
-    e.preventDefault
-    this.setState({
-      dinners: this.state.dinners.concat([
-        { meal: this.state.meal,
-          ethnicity: this.state.ethnicity,
-          description: this.state.description,
-          image:this.state.image,
-          display:"false"
-        }
-      ])
-    });
-  } */
-
-
-  onSubmit = (e) => {
-    e.preventDefault
-    console.log(this.state);
-    // this.props.onSubmit (this.state)
-    this.setState({
-      meal:this.state.dinners.meal,
-      ethnicity:this.state.dinners.ethnicity,
-      description:this.state.dinner.description,
-      image:this.state.dinners.image,
-      display:"false"
-    })
-    console.log(this.state.dinners);
-  }
-
-  /* let arr = Object.keys(myObject).map(function (i) {
-  return myObject[i];
-});*/
+additional issue with SUI and React. 
 
 ---------------------- Card Functions -------------------
   handleRemoveDinner(index){
@@ -230,6 +84,15 @@ Classic only handles one specific value.
      let filteredArray = this.state.dinners.filter(index => index !== e.target.value)
      this.setState({dinners: filteredArray});
  } 
+  Parent Component
+  line 203<DinnerCard
+            removeDinner={this.removeDinner}
+            handleRate={this.handleRate}
+            rating={rating}
+          />
+
+Next Step -- Get Rating to work. 
+handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
 
 --------------------------------------------------------
 3 functions guide the card display.
@@ -238,12 +101,74 @@ How to fix Card List to accomodate this.
 Idea below, code broken. if, if, else
 
 
-import DinnerCard from './DinnerCard';
-
+----------------------PseudoCode 4/26-------------------
 const CardList = (props) => {
   return (
         <Card.Group equal itemsPerRow={4}>
 
+if (props.displayType === "random"){
+  then 
+  props.dinners.filter(props.randomMeal){
+    return(
+      <DinnerCard />
+    )
+  }
+}
+
+if(props.displayType === "props.ethnicity"){
+  props.dinners.filter(props.ethnicity){
+    return(
+      <DinnerCard />
+    )
+  }
+}
+
+else{
+  props.dinners.map(){
+    return{
+      <DinnerCard />
+    }
+  }
+}
+
+
+Mario's code that I broke: Won't compile - pointer is at dot in props.randomMeal right after return
+
+const CardList = (props) => {
+  return (
+{
+         props.randomMeal ? 
+         props.dinners.map((dinner, index) => {
+           if(dinner.meal === props.randomMeal) {
+             return (
+               <DinnerCard
+                 key={index}
+                 meal={dinner.meal}
+                 ethnicity={dinner.artist}
+                 image={dinner.image}
+                 description={dinner.description}
+               />
+             );
+           }
+-
+         })
+         :
+         props.dinners.map((dinner, index) => (
+           <DinnerCard
+             key={index}
+             meal={dinner.meal}
+             ethnicity={dinner.artist}
+             image={dinner.image}
+             description={dinner.description}
+           />
+         ))
+       }
+  );
+}
+-----------------------------------------
+        line 249 vs 250
+        function(dinner){}
+          if(props.displayType === "random")...
           if(dinner.meal === props.randomMeal) {
             props.dinners.filter((dinner, index) => (
               <DinnerCard
@@ -286,14 +211,74 @@ const CardList = (props) => {
 export default CardList;
 
 
+if(dinner.meal === props.randomMeal){
+        props.dinners.map((dinner, index) => {
+            return (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            );
+          })
+      }
+        :
+        props.dinners.map((dinner, index) => (
+          <DinnerCard
+            key={index}
+            meal={dinner.meal}
+            ethnicity={dinner.ethnicity}
+            image={dinner.image}
+            description={dinner.description}
+          />
+        ))
+      }
 
+      **************** 2nd if statment **********
 
+                if(dinner.ethnicity === props.ethnicity){
+            props.dinners.filter((ethnicity, index){
+              return(
+                <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+              );  
+            })
+          }
 
+Card List if, else
 
-
-
-
-
-
-
-    
+function(dinner, index){
+          if(dinner.meal === props.randomMeal){
+            props.dinners.map((dinner, index) =>{
+            return (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+              );
+            })
+          }
+          else{
+            props.dinners.map((dinner, index) => {
+                return (
+                  <DinnerCard
+                    key={index}
+                    meal={dinner.meal}
+                    ethnicity={dinner.artist}
+                    image={dinner.image}
+                    description={dinner.description}
+                  />
+                );
+              })
+          }
+        }

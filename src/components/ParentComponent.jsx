@@ -77,7 +77,8 @@ class ParentComponent extends Component {
     description:"",
     image:"",
     display:false,
-    showModal:false
+    showModal:false,
+    displayType: "all"
   }
 
 /* **********  Navbar Methods **************** */
@@ -110,6 +111,12 @@ class ParentComponent extends Component {
      this.setState({ethnicity: data.value});
      console.log(this.state.ethnicity);
 
+    }
+
+    updateDisplayType = (displayType) => {
+      console.log(displayType);
+      this.setState({displayType:displayType});
+      console.log("state should be set to:" + displayType);
     }
 /* **********  Modal Form Related Methods **************** */
 
@@ -167,7 +174,7 @@ removeDinner(e, index) {
 
 
   render() {
-    const { randomMeal, dinners, currentChoices, meal, ethnicity, description, image, showModal, rating} = this.state;
+    const { randomMeal, dinners, currentChoices, meal, ethnicity, description, image, showModal, rating, displayType} = this.state;
     return(
       <div>
         <InfoHeader
@@ -182,6 +189,7 @@ removeDinner(e, index) {
           openModal={this.openModal}
           closeModal={this.closeModal}
           showModal={showModal}
+          updateDisplayType={this.updateDisplayType}
         />
         <Container>
           <CardList
@@ -189,6 +197,7 @@ removeDinner(e, index) {
             dinners={dinners}
             handleRate={null}
             removeDinner={this.removeDinner}
+            displayType={displayType}
           />
         </Container>
           <DinnerCard

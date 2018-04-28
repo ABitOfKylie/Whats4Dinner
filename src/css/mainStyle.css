@@ -68,6 +68,30 @@ p {
 	color: #705e3c;
 }
 
+/*.ui.modal{
+	margin-top: - !important;
+}*/
+
+/*.visible.transition {
+  display: unset !important;
+}
+
+.dimmed.dimmable > .ui.visible.dimmer, .ui.active.dimmer {
+  display: -ms-flexbox;
+  display: flex !important;
+  opacity: 1;
+}*/
+
+.ui.dimmer {
+  display: flex !important;
+}
+
+.ui.modal {
+  margin-top: 0;
+}
+
+
+
 /* ---- Layout Containers ---- */
 
 
