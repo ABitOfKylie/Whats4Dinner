@@ -7,8 +7,10 @@ const CardList = (props) => {
   return (
 <Card.Group equal itemsPerRow={4}>
       {
-        props.randomMeal ? 
+        props.randomMeal ?
         props.dinners.map((dinner, index) => {
+            console.log('CARDLIST PROPS', props.randomMeal);
+            console.log('CARDLIST PROPS', dinner.meal);
           if(dinner.meal === props.randomMeal) {
             return (
               <DinnerCard

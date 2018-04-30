@@ -115,8 +115,7 @@ const Navbar = (props) => {
 					  icon
 					  labelPosition="left"
 					  onClick={() => {
-							  props.updateDisplayType('random')
-							  props.chooseRandom
+							  props.updateDisplayType();
 						  }
 					  }
 				  >

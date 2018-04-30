@@ -8,56 +8,56 @@ import DinnerCard from './CardGroup/DinnerCard';
 let dinners = [
   {
     id:1,
-    meal:"Pizza",
-    ethnicity:"Italian",
+    meal:"pizza",
+    ethnicity:"italian",
     description:"A circular platform covered with a tangy tomato sauce, smothered in cheese.",
     image:"../../images/Pizza.jpg",
     display:false
   },
   {
     id:2,
-    meal:"Penne Arrabiata",
-    ethnicity:"Italian",
+    meal:"penne arrabiata",
+    ethnicity:"italian",
     description:"Penne pasta with spicy tomato sauce.",
     image:"../../images/PenneArrabiata.jpg",
     display:false
   },
   {
     id:3,
-    meal:"Lasagna",
-    ethnicity:"Italian",
+    meal:"lasagna",
+    ethnicity:"italian",
     description:"Meat and noodles covered with a tangy tomato sauce, smothered in cheese.",
     image:"../../images/Lasagna.jpg",
     display:false
   },
   {
     id:4,
-    meal:"Burritos",
-    ethnicity:"Mexican",
+    meal:"burritos",
+    ethnicity:"mexican",
     description:"Rolled up beans, cheese and gunk.",
     image:"../../images/Burritos.jpg",
     display:false
   },
   {
     id:5,
-    meal:"Chicken Mole",
-    ethnicity:"Mexican",
+    meal:"chicken mole",
+    ethnicity:"mexican",
     description:"Mexican chocolate adds an intriguing complexity to the smoky, savory sauce. Stir in some cooked, shredded chicken and you've got a whole new go-to chili.",
     image:"../../images/ChickenMole.jpg",
     display:false
   },
   {
     id:6,
-    meal:"Fried Chicken",
-    ethnicity:"American",
+    meal:"fried chicken",
+    ethnicity:"american",
     description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
     image:"../../images/FriedChicken.jpg",
     display:false
   },
   {
     id:7,
-    meal:"Hamburgers",
-    ethnicity:"American",
+    meal:"hamburgers",
+    ethnicity:"american",
     description:"A hamburger is a sandwich consisting of a cooked meat patty on a bun or roll. You can order a hamburger, fries, and a shake at most fast food restaurants. Hamburgers are traditionally made with ground beef and served with onions, tomatoes, lettuce, ketchup, and other garnishes.",
     image:"../../images/Hamburger.jpg",
     display:false
@@ -84,8 +84,13 @@ class ParentComponent extends Component {
   /* **********  Navbar Methods **************** */
     // this method will help us update state on displayType which will update what we render in cardlist
     // The method was passed to navbar and used on random, view all and ethnicity buttons
-    updateDisplayType = (displayType) => {
-      console.log('Navbar Updated to Display', displayType);
+    updateDisplayType = () => {
+        let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
+        this.setState(() => ({
+             randomMeal: randomChoice.meal
+        }));
+        console.log('randomChoice', this.state.displayType);
+        // console.log('Navbar Updated to Display', displayType);
     }
 
     handleEthnicityChange = (e, data) => {
@@ -97,13 +102,12 @@ class ParentComponent extends Component {
 
     }
 
-  chooseRandom = (e) => {
-    e.preventDefault();
-    let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
-    console.log(randomChoice);
-    let chosenMeal = randomChoice.meal;
-    this.setState({randomMeal:chosenMeal});
-    console.log(chosenMeal);
+  chooseRandom = () => {
+    // let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
+    // console.log('randomChoice', randomChoice.ethnicity);
+    // let chosenMeal = randomChoice.meal;
+    // this.setState({randomMeal:chosenMeal});
+    // console.log(chosenMeal);
   }
 
    viewAll = (e) => {
@@ -187,7 +191,7 @@ removeDinner(index) {
         <Container>
           <CardList
               displayType={displayType}
-            randomMeal={this.randomMeal}
+            randomMeal={randomMeal}
             dinners={dinners}
             handleRate={null}
             removeDinner={this.removeDinner}
