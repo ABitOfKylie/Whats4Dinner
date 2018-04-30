@@ -40,7 +40,7 @@ const EthnicChoices = [
     }
 ]
 
-const FormInput =(props) => {
+const FormStandAlone =(props) => {
 
   return(
     <div>
@@ -107,4 +107,4 @@ const FormInput =(props) => {
 
 
 
-export default FormInput;
+export default FormStandAlone;

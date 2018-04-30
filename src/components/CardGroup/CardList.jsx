@@ -14,7 +14,7 @@ const CardList = (props) => {
                <DinnerCard
                  key={index}
                  meal={dinner.meal}
-                 ethnicity={dinner.artist}
+                 ethnicity={dinner.ethnicity}
                  image={dinner.image}
                  description={dinner.description}
                />
@@ -26,7 +26,7 @@ const CardList = (props) => {
            <DinnerCard
              key={index}
              meal={dinner.meal}
-             ethnicity={dinner.artist}
+             ethnicity={dinner.ethnicity}
              image={dinner.image}
              description={dinner.description}
            />

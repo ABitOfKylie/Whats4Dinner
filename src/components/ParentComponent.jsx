@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Container} from 'semantic-ui-react';
 import InfoHeader from './InfoHeader/InfoHeader';
 import CardList from './CardGroup/CardList';
-import FormInput from './Form/addDinnerForm';
+import FormStandAlone from './Form/addDinnerForm';
 import DinnerCard from './CardGroup/DinnerCard';
-import ModalForm from './Form/addDinnerModal';
 
 
 let dinners = [
@@ -126,12 +125,10 @@ class ParentComponent extends Component {
         [e.target.name]:e.target.value 
 
       });
-        console.log(e.target.value)
     }
 
  addNewDinner = (e) => {
     e.preventDefault
-    console.log("add button has been clicked");
     let updated = this.state.dinners.slice();
       const newDinner = {
         meal: this.state.meal,
@@ -140,11 +137,10 @@ class ParentComponent extends Component {
         image:this.state.image,
         display: false,
         id: this.state.dinners.length + 1
-    }
+      }
     updated.push(newDinner);
     this.setState({dinners:updated});
     console.log("dinners new state:" + {dinners})
-    console.log("Here comes the clear");
     this.clearForm();
     this.closeModal();
   }
@@ -159,6 +155,9 @@ class ParentComponent extends Component {
     this.setState({ showModal: false })
   }
 
+  clickCheck = () => {
+    console.log("This button has been clicked");
+  }
 /* **********  Card Related Methods **************** */
 
 handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
@@ -190,38 +189,29 @@ removeDinner(e, index) {
           closeModal={this.closeModal}
           showModal={showModal}
           updateDisplayType={this.updateDisplayType}
+          clickCheck={this.clickCheck}
         />
         <Container>
           <CardList
             randomMeal={this.randomMeal}
             dinners={dinners}
-            handleRate={null}
+            handleRate={this.handleRate}
+            rating={rating}
             removeDinner={this.removeDinner}
             displayType={displayType}
           />
         </Container>
-          <DinnerCard
-            removeDinner={this.removeDinner}
-            handleRate={this.handleRate}
-            rating={rating}
-          />
-          <FormInput
-            dinners={dinners}
-            meal={meal}
-            ethnicity={ethnicity}
-            description={description}
-            image={image}
-            change={this.change}
-            onSubmit={null} 
-            addNewDinner={this.addNewDinner}
-            handleEthnicityChange={this.handleEthnicityChange}         
-          />  
-          <ModalForm
-            addNewDinner={this.addNewDinner}
-            openModal={this.openModal}
-            closeModal={this.closeModal}
-            showModal={showModal}
-          />
+        <FormStandAlone
+          dinners={dinners}
+          meal={meal}
+          ethnicity={ethnicity}
+          description={description}
+          image={image}
+          change={this.change}
+          onSubmit={null} 
+          addNewDinner={this.addNewDinner}
+          handleEthnicityChange={this.handleEthnicityChange}         
+        />  
       </div>
 
     );

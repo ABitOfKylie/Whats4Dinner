@@ -4,7 +4,7 @@ import { Card, Button, Rating, Popup} from 'semantic-ui-react';
 
 const DinnerCard = (props) => {
   return(
-    <Card className="card"
+    <Card className="card" 
       image = {props.image}
       header = {props.meal}
       meta = {props.ethnicity}

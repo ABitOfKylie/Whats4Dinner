@@ -236,11 +236,11 @@ const ModalButton = (props) => {
       <Modal.Actions>
         <Button color='red' onClick={props.closeModal}>
           <Icon name='remove' /> 
-          Never mind
+          Never mind doesn't work
         </Button>
-        <Button color='green' type="submit" value="submit" form="theForm">
+        <Button color='green' type="submit" value="submit" form="theForm" onClick={props.clickCheck}>
           <Icon name='checkmark' /> 
-          Submit
+          Submit does not work
         </Button>
       </Modal.Actions>
     </Modal>
