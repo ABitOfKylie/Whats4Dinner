@@ -179,7 +179,7 @@ const Navbar = (props) => {
 const ModalButton = (props) => {
   return (
     <Modal closeIcon 
-      trigger={<Button onClick={props.openModal}><Icon className='plus' />Add New Modal Form</Button>}
+      trigger={<Button onClick={props.openModal}><Icon className='plus circle' />Add New via Modal Form</Button>}
       open={props.showModal}
       onClose={props.closeModal}
       basic

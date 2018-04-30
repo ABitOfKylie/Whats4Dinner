@@ -49,7 +49,7 @@ const FormInput =(props) => {
         <Header as='h2' icon textAlign='center'>
           <Icon name='food' color="red" circular />
           <Header.Content>
-            Add New Dinner Option
+            AddDinnerForm.jsx Stand Alone
           </Header.Content>
         </Header>
       <Segment className="formContent"stacked>
@@ -73,8 +73,8 @@ const FormInput =(props) => {
                 onChange={props.handleEthnicityChange}
             >
             </Form.Select>
-          </Form.Group>
-        
+          </Form.Group>  
+
           <Form.TextArea
                 rows="3"
                 label="Description"
@@ -95,7 +95,7 @@ const FormInput =(props) => {
             >
           </Form.Input>
           <Form.Button fluid type="submit">
-              Submit
+              Click It to Submit It
           </Form.Button>
         </Form>
       </Segment>
