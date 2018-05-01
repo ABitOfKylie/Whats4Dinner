@@ -1,0 +1,207 @@
+/*color palette
+#662225 red onion
+#B51D0A	spicy
+#Ead39c parsnip
+#7D5E3c peppercorn
+
+#8C0004 currant
+#C8000A scarlet
+#E8A735 marigold
+#E2c499 cobblestone
+#232b2b soft black
+#3b444b softer black
+#414a4c softest black / dark gray
+#A0A4A5 light gray
+
+Font Families Lora Roboto &  Rock Salt" 
+*/
+
+
+
+
+body {
+  font-family: 'Lora', serif;
+	background-color: #232b2b;
+}
+
+p {
+	font-family: 'Roboto', 
+}
+
+/* ---- Banner ---- */
+
+.banner,
+.main-footer {
+	text-align: left;
+}
+
+.banner {
+	color: #c8000A;
+	background: #232b2b;
+	padding: 0.5em;
+/*	padding-bottom:0.75em;
+*/
+}
+
+.headline {
+	padding-top: .5em;
+	padding-bottom: .5em;
+	color:#8c0004;
+	font-family: 'Rock Salt', cursive;
+	font-size: 45px;
+
+}
+
+
+.ui.avatar.image {
+	margin-right:5.25em;
+}
+/* ---- Navigation ---- */
+
+.buttonBar{
+	background-color:#8C0004;
+	padding: 0.5em;
+	margin:0 0.5em;
+}
+
+.barButton{
+	color: #705e3c;
+}
+
+/*.ui.modal{
+	margin-top: - !important;
+}*/
+
+/*.visible.transition {
+  display: unset !important;
+}
+
+.dimmed.dimmable > .ui.visible.dimmer, .ui.active.dimmer {
+  display: -ms-flexbox;
+  display: flex !important;
+  opacity: 1;
+}*/
+
+.ui.dimmer {
+  display: flex !important;
+}
+
+.ui.modal {
+  margin-top: 0;
+}
+
+
+
+/* ---- Layout Containers ---- */
+
+
+.ui.four.cards{
+	margin-top:30px;
+}
+
+/* ---- Card ---- */
+
+.ui.container{
+	margin-top:10px;
+}
+
+.ui.card.group{
+	margin-top:25px;
+}
+.ui.card.card {
+	display:flex;
+  height: 400px;
+  max-width: auto;
+  border:4px solid #E8a735;
+  margin-top: 10px;
+  margin-right:20px;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
+}
+
+.card .image {
+    height: 150px;
+    overflow: hidden;
+}
+
+.ui.card .meta{
+		font-size:24px;
+		color:rgba(140, 0, 4, .5);
+		font-family: Lora;
+}
+.ui.card>.content>.description {
+		display:flex;
+  	margin-top: .5em;
+    overflow-y: auto;
+  	text-overflow: ellipsis;
+    max-height: 120px;
+}
+
+.ui.card.description,  {
+	overflow-y: auto;
+	text-overflow: ellipsis;
+	background-color: #e2c499
+
+}
+.ui.buttons.bottomLine{
+  min-width: 33.3333%;
+/*  max-width: 33.3333%;
+*/  font-size: 0.8em;
+  padding: 6px 2px;
+}
+
+.formCard{
+	Background-color: white;
+	border:solid 5px #E8A735;
+}
+
+
+.formContent{
+	Background-color: #E2c499;
+	border:solid 5px #E8A735;
+}
+
+
+/* ---- Page Elements ---- */
+
+
+
+.btn-blue {
+	width: 100%;
+	background-color: #61dafb;
+	border: none;
+	padding: 10px 25px;
+	font-size: 20px;
+}
+
+.btn-blue a {
+	color: #000000;
+}
+
+.btn-blue:hover {
+	background-color: #ffffff;
+}
+
+
+/* =================================
+  Media Queries
+==================================== */
+
+@media (min-width: 769px) {
+
+  /* .main-header {
+    width: 100%;
+    margin: 0 auto;
+  } */
+
+	.row {
+		width: 90%;
+		margin: auto;
+	}
+
+	.tagline {
+		font-size: 1.4em;
+	}
+
+}

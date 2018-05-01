@@ -1,68 +1,250 @@
 import React from 'react';
-import { Button, Container, Divider, Grid, Header, Image, Menu, Segment, Icon, Popup, Dropdown, Input, Flag, Label } from 'semantic-ui-react';
-// import DropdownEthnic from "./dropdownEthnic";
-const InfoHeader = () => ( 
-<Container style = { { marginTop: '3em' } } >
-	<Segment clearing>
-    <Header as = 'h1' floated="left">
-	    <Image src = '../images/dinnerLogo.jpeg'avatar />
-	    What 's For Dinner 
-	    <Popup 
-	    	trigger = { < Icon circular name = 'utensils'
-	        small / > } 
-	      content = "Number of dinner choices currently available. Input#"
-	    	on = 'hover' />
-	  </Header> 
-	   <Header as = "h2" floated="right">	    	
-		    	<label>
-		    	Dinner being prepared:
-		    	current dinner = props.currentDinner
-			    <br/>
-			    <i class = "hourglass half icon" iconPosition = 'right'></i>
-			        Prep Time Remaining:
-		    	<Label.Detail>10:46 (coded) </Label.Detail>
-		    	</label>
-	    </Header>
-   </Segment>
-    <Grid columns = { 3 } doubling >
-    	<Grid.Column >
-    		<Menu secondary pointing >
-			    <Menu.Item >
-			    <Button purple > Random Pick < /Button> 
-			    </Menu.Item>
+import { Button, Grid, Header, Image, Menu, Segment, Icon, Dropdown, Statistic, Modal, Form } from 'semantic-ui-react';
 
-			    <Menu.Item >
-			    	<Dropdown text = 'Choose Meal'
-			    		icon = 'flag'
-			    		floating labeled button className = 'icon'>
-				    	<Dropdown.Menu >
-					    <Dropdown.Header content = 'Search for a particular Meal' / >
-						    <Input icon = 'search'
-						    iconPosition = 'left'
-						    name = 'search' / >
-						    <Dropdown.Header icon = 'flag'
-						    content = 'Filter by ethnicity'/>
-					    <Dropdown.Divider />
-						    <Dropdown.Item label = { { Flag: 'mx' } } text = 'Mexican' value="Mexican"/ >
-						    <Dropdown.Item label = { { color: 'blue', empty: true, circular: true } } text = 'American' / >
-						    <Dropdown.Item label = { { color: 'green', empty: true, circular: true } } text = 'Italian' / >
-						    <Dropdown.Item label = { { color: 'yellow', empty: true, circular: true } } text = 'Indian' / >
-						    <Dropdown.Item label = { { color: 'red', empty: true, circular: true } } text = 'Chinese' / >
+const EthnicChoices = [
+		{
+			key:"mx",
+			value:"Mexican",
+      name:"Mexican",
+			flag:"mx",
+			text:"Mexican"
+		},
+		{
+			key:"us",
+			value:"American",
+			name:"American",
+			text:"American",
+			flag:"us",
+		},
+		{
+			key:"it",
+			value:"Italian",
+      name:"Italian",
+			flag:"it",
+			text:"Italian"
+		},
+		{
+			key:"in",
+			value:"Indian",
+      name:"Indian",
+			flag:"in",
+			text:"Indian"
+		},
+		{
+			key:"cn",
+			value:"Chinese",
+      name:"Chinese",
+			flag:"cn",
+			text:"Chinese"
+		}
+]
 
-			    		</Dropdown.Menu> 
-			    	</Dropdown> 
-			    </Menu.Item> 
-			    <Menu.Item >
-			    	<Button icon labelPosition = 'left' >
-			    		<Icon name = 'plus circle' / >
-			    		Add a meal
-			    	</Button> 
-			    </Menu.Item> 
-    		</Menu> 
-    	</Grid.Column> 
-   </Grid> 
-</Container>
-);
+const InfoHeader =(props) =>{
+	return(  
+		<div className="InfoHeader">
+    <Segment.Group raised>
+      <Banner 
+      	dinners = {props.dinners}
+      	currentChoices = {props.currentChoices}
+      />
+      <Navbar
+      	randomMeal ={props.randomMeal}
+      	chooseRandom = {props.chooseRandom}
+      	addNewDinner = {props.addNewDinner}
+      	ethnicity={props.ethnicity}
+      	handleEthnicityChange={props.handleEthnicityChange}
+      	viewAll={props.viewAll}
+      	change={props.change}
+        showModal={props.showModal}
+        openModal={props.openModal}
+        closeModal={props.closeModal}
+        updateDisplayType={props.updateDisplayType}
 
+      />
+    </Segment.Group>
+	</div>
+	);
+}
+
+
+const Banner = (props) => {
+  return (
+    <div className="banner">
+      <Segment.Group horizontal raised >
+        <Segment>
+          <h1 className="headline"> 
+          <Image size="small" src = '../images/utensilsBlack.jpg'avatar />
+            What 's For Dinner 
+          </h1>
+        </Segment>
+        <Segment>
+					<Stat 
+					currentChoices={props.currentChoices}
+					/>				
+				</Segment>
+      </Segment.Group>
+    </div>
+  );
+}
+
+const Stat = (props) => {
+  return (
+    <div className="DinnerTotal" >
+      <Header as = 'h3' floated="right">
+        <Statistic color="black" >
+          <Statistic.Value>
+            <Icon color = "red" name="food" size="small"/>
+            <span>: </span>            
+              {props.currentChoices} 
+          </Statistic.Value>
+          <Statistic.Label >Dinner Choices</Statistic.Label>
+        </Statistic>
+      </Header> 
+    </div>
+    );
+}
+
+
+
+const Navbar = (props) => {
+  return (
+  <div className="Navbar">
+
+        <Grid columns = { 5 } doubling className="buttonBar">
+          <Grid.Column >
+            <Menu secondary pointing >
+              <Menu.Item >
+                <Button 
+                  className="barButton" 
+                  icon 
+                  labelPosition="left"
+                  onClick={() => {
+                     props.updateDisplayType('random'),
+                     props.chooseRandom
+                     }
+                   }
+                 >
+                  <Icon name='food' />
+                  Random Pick
+                </Button>
+              </Menu.Item>
+              <Menu.Item>
+                <h4>
+                  {props.randomMeal}              
+                </h4> 
+              </Menu.Item>
+              <Menu.Item>
+                <Button className="showAll" 
+                  icon 
+                  labelPosition='left' 
+                  onClick={() => 
+                    props.updateDisplayType("all")
+                  }
+                >
+                <Icon name="food" />
+                View All
+                </Button>
+              </Menu.Item>
+              <Menu.Item>
+                <Dropdown 
+                    floating
+                    label="Ethnicity"
+                    button
+                    className="icon"
+                    icon="flag"
+                    size="tiny"
+                    onChange={props.handleEthnicityChange}
+                    options={EthnicChoices}
+                    placeholder='Select Ethnic Type'  
+                    selection
+                    value={props.ethnicity}
+                />
+              </Menu.Item>
+              <Menu.Item >
+                <Button onClick={props.addNewDinner} icon labelPosition = 'left' >
+                   <Icon name = 'plus circle' />
+                   Add a meal
+                </Button> 
+              </Menu.Item> 
+              <Menu.Item>
+                <ModalButton />
+              </Menu.Item>
+            </Menu> 
+          </Grid.Column> 
+       </Grid> 
+  </div>
+  );
+}
+
+const ModalButton = (props) => {
+  return (
+    <Modal closeIcon 
+      trigger={<Button onClick={props.openModal}><Icon className='plus circle' />Add New via Modal Form</Button>}
+      open={props.showModal}
+      onClose={props.closeModal}
+      basic
+      size="small"
+  >
+      <Modal.Header icon='add circle' content='Add New Meal' />
+      <Modal.Content>
+        <Form  id="theForm" size="large" onSubmit={props.addNewDinner}>
+          <Form.Group widths="equal">
+            <Form.Input
+                fluid
+                label="Dinner Name"
+                placeholder="Enter New Meal Choice"
+                name="meal"
+                value={props.meal}
+                onChange={props.change}
+            >
+            </Form.Input>
+            <Form.Select
+                fluid
+                label="Ethnicity"
+                options={EthnicChoices}
+                placeholder="Ethnicity"
+                name="ethnicity"
+                onChange={props.handleEthnicityChange}
+            >
+            </Form.Select>
+          </Form.Group>
+        
+          <Form.TextArea
+                rows="3"
+                label="Description"
+                placeholder="Enter Meal Description"
+                name="description"
+                value={props.description}
+                onChange={props.change}
+          >
+          </Form.TextArea>
+          <Form.Input
+              label="Image"
+              image="image"
+              type="text" 
+              name="image"
+              value={props.image}
+              onChange={props.change}
+              placeholder="Enter Meal Image example: http://..."
+            >
+          </Form.Input>
+          <Form.Button fluid type="submit">
+              Submit
+          </Form.Button> 
+        </Form>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button color='red' onClick={props.closeModal}>
+          <Icon name='remove' /> 
+          Never mind doesn't work
+        </Button>
+        <Button color='green' type="submit" value="submit" form="theForm" onClick={props.clickCheck}>
+          <Icon name='checkmark' /> 
+          Submit does not work
+        </Button>
+      </Modal.Actions>
+    </Modal>
+  )
+}
 
 export default InfoHeader;

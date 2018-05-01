@@ -1,0 +1,284 @@
+Starting at Navbar and moving down
+
+What I really need help on: 
+  New function in Card List to cover all 3 scenarios
+  Random Pick, View All and filter by chosen Ethnicity
+
+  Help understanding how to pass data from the total form incl. the select dropdown as an obj that includes properties to dinner array.  Notes start line 92
+
+
+CSS: (Semantic is frustrating)
+  Want equal sizes of buttons, select and input on Navbar
+
+**************Functional Problems*******************
+  RandomPick Button updates State no longer displays card
+  
+  Parent Component: 
+    line 83: chooseRandom()
+    line 191: passed to InfoHeader
+    line 190: randomMeal in State, Const and passed to InfoH
+  InfoHeader Component:
+    line 51,52: both passed to Navbar Line 51,52
+    line 116: button using props.chooseRandom
+
+------------------------------------------
+
+View All Button  - is connected correctly
+  Parent Component:
+    line 92: viewAll function
+    line 195: passed to InfoHeader
+  InfoHeader Component: /Navbar
+    line 56: passed to Navbar
+    line 129: button using props.viewAll
+
+      this.state.dinners.map(dinner => {
+    <DinnerCard>{dinner}<DinnerCard/>
+    })
+      {this.state.dinners.map(function(dinner) {
+            return <li>{dinner}</li>
+       })}
+
+  Problem is Display  CardList (same for Ethnicity below)
+------------------------------------------
+
+
+
+------------------------------------------
+clearForm does not affect the dropdown menu.
+
+*************** Form Submission *********************
+Form within Modal - https://github.com/Semantic-Org/Semantic-UI-React/issues/1012
+
+https://react.semantic-ui.com/collections/form#form-example-subcomponent-control
+
+https://github.com/Semantic-Org/Semantic-UI-React/blob/master/docs/app/Examples/collections/Form/Usage/FormExampleCaptureValues.js
+
+React Redux Modals
+https://medium.com/front-end-hacking/react-redux-no-need-to-component-state-for-modals-73871157b52e
+
+Modal position top corner left cut off.
+Patch solutions recommended by Semantic Org - latest 21 days ago:
+https://github.com/Semantic-Org/Semantic-UI-React/issues/2550  (#2689 points our conflict SUI css v2.24 and v 2.31, old version works.) #2899 => #6185,#2736 => 255x
+temporary solution by frank.boudraa - #2549
+
+.ui.dimmer {
+  display: flex !important;
+}
+
+.ui.modal {
+  margin-top: 0;
+}
+
+additional issue with SUI and React. 
+
+---------------------- Card Functions -------------------
+  handleRemoveDinner(index){
+    this.setState({
+      dinners:this.state.dinners.filter(function(e, i){
+        return i !== index;
+      })
+    });
+  }
+  or
+  removeDinner(e, i) {
+     let filteredArray = this.state.dinners.filter(index => index !== e.target.value)
+     this.setState({dinners: filteredArray});
+ } 
+  Parent Component
+  line 203<DinnerCard
+            removeDinner={this.removeDinner}
+            handleRate={this.handleRate}
+            rating={rating}
+          />
+
+Next Step -- Get Rating to work. 
+handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
+
+--------------------------------------------------------
+3 functions guide the card display.
+How to fix Card List to accomodate this.
+
+Idea below, code broken. if, if, else
+
+
+----------------------PseudoCode 4/26-------------------
+const CardList = (props) => {
+  return (
+        <Card.Group equal itemsPerRow={4}>
+
+if (props.displayType === "random"){
+  then 
+  props.dinners.filter(props.randomMeal){
+    return(
+      <DinnerCard />
+    )
+  }
+}
+
+if(props.displayType === "props.ethnicity"){
+  props.dinners.filter(props.ethnicity){
+    return(
+      <DinnerCard />
+    )
+  }
+}
+
+else{
+  props.dinners.map(){
+    return{
+      <DinnerCard />
+    }
+  }
+}
+
+
+Mario's code that I broke: Won't compile - pointer is at dot in props.randomMeal right after return
+
+const CardList = (props) => {
+  return (
+{
+         props.randomMeal ? 
+         props.dinners.map((dinner, index) => {
+           if(dinner.meal === props.randomMeal) {
+             return (
+               <DinnerCard
+                 key={index}
+                 meal={dinner.meal}
+                 ethnicity={dinner.artist}
+                 image={dinner.image}
+                 description={dinner.description}
+               />
+             );
+           }
+-
+         })
+         :
+         props.dinners.map((dinner, index) => (
+           <DinnerCard
+             key={index}
+             meal={dinner.meal}
+             ethnicity={dinner.artist}
+             image={dinner.image}
+             description={dinner.description}
+           />
+         ))
+       }
+  );
+}
+-----------------------------------------
+        line 249 vs 250
+        function(dinner){}
+          if(props.displayType === "random")...
+          if(dinner.meal === props.randomMeal) {
+            props.dinners.filter((dinner, index) => (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            ))
+          }
+          if(dinner.ethnicity === props.ethnicity){
+            return (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            );
+          }
+          else{
+            props.dinners.map((dinner, index) => (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            ))
+          }
+        })
+
+    </Card.Group>
+  );
+}
+
+export default CardList;
+
+
+if(dinner.meal === props.randomMeal){
+        props.dinners.map((dinner, index) => {
+            return (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+            );
+          })
+      }
+        :
+        props.dinners.map((dinner, index) => (
+          <DinnerCard
+            key={index}
+            meal={dinner.meal}
+            ethnicity={dinner.ethnicity}
+            image={dinner.image}
+            description={dinner.description}
+          />
+        ))
+      }
+
+      **************** 2nd if statment **********
+
+                if(dinner.ethnicity === props.ethnicity){
+            props.dinners.filter((ethnicity, index){
+              return(
+                <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+              );  
+            })
+          }
+
+Card List if, else
+
+function(dinner, index){
+          if(dinner.meal === props.randomMeal){
+            props.dinners.map((dinner, index) =>{
+            return (
+              <DinnerCard
+                key={index}
+                meal={dinner.meal}
+                ethnicity={dinner.artist}
+                image={dinner.image}
+                description={dinner.description}
+              />
+              );
+            })
+          }
+          else{
+            props.dinners.map((dinner, index) => {
+                return (
+                  <DinnerCard
+                    key={index}
+                    meal={dinner.meal}
+                    ethnicity={dinner.artist}
+                    image={dinner.image}
+                    description={dinner.description}
+                  />
+                );
+              })
+          }
+        }

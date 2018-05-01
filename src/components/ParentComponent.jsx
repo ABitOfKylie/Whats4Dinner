@@ -1,78 +1,223 @@
 import React, { Component } from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container} from 'semantic-ui-react';
 import InfoHeader from './InfoHeader/InfoHeader';
-import CardBase from './CardGroup/Card';
+import CardList from './CardGroup/CardList';
+import FormStandAlone from './Form/addDinnerForm';
+import DinnerCard from './CardGroup/DinnerCard';
 
-var dinners = [
+
+let dinners = [
   {
+    id:1,
     meal:"Pizza",
     ethnicity:"Italian",
-    prepTime:"25 min",
     description:"A circular platform covered with a tangy tomato sauce, smothered in cheese.",
-    image:"",
-    ordered:false
+    image:"../../images/Pizza.jpg",
+    display:false
   },
   {
-    meal:"Penne Arrabica",
+    id:2,
+    meal:"Penne Arrabiata",
     ethnicity:"Italian",
-    prepTime:"35 min",
     description:"Penne pasta with spicy tomato sauce.",
-    image:"",
-    ordered:false
+    image:"../../images/PenneArrabiata.jpg",
+    display:false
   },  
   {
+    id:3,
     meal:"Lasagna",
     ethnicity:"Italian",
-    prepTime:"45 min",
     description:"Meat and noodles covered with a tangy tomato sauce, smothered in cheese.",
-    image:"",
-    ordered:false
+    image:"../../images/Lasagna.jpg",
+    display:false
   },
   {
+    id:4,
     meal:"Burritos",
     ethnicity:"Mexican",
-    prepTime:"35 min",
     description:"Rolled up beans, cheese and gunk.",
-    image:"",
-    ordered:false
+    image:"../../images/Burritos.jpg",
+    display:false
   },
   {
+    id:5,
     meal:"Chicken Mole",
     ethnicity:"Mexican",
-    prepTime:"75 min",
     description:"Mexican chocolate adds an intriguing complexity to the smoky, savory sauce. Stir in some cooked, shredded chicken and you've got a whole new go-to chili.",
-    image:"",
-    ordered:false
+    image:"../../images/ChickenMole.jpg",
+    display:false
   },
   {
+    id:6,
     meal:"Fried Chicken",
     ethnicity:"American",
-    prepTime:"55 min",
     description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
-    image:"",
-    ordered:false
+    image:"../../images/FriedChicken.jpg",
+    display:false
   },   
   {
-    meal:"Fried Chicken 2",
+    id:7,
+    meal:"Hamburgers",
     ethnicity:"American",
-    prepTime:"55 min",
-    description:"Fried chicken (also referred to as Southern fried chicken for the variant in the United States) is a dish consisting of chicken pieces usually from broiler chickens which have been floured or battered and then pan-fried, deep fried, or pressure fried.",
-    image:"",
-    ordered:false
+    description:"A hamburger is a sandwich consisting of a cooked meat patty on a bun or roll. You can order a hamburger, fries, and a shake at most fast food restaurants. Hamburgers are traditionally made with ground beef and served with onions, tomatoes, lettuce, ketchup, and other garnishes.",
+    image:"../../images/Hamburger.jpg",
+    display:false
   }   
 ];
 
-class ParentComponent extends Component {
-  // this.state = dinners
-  render(){
+class ParentComponent extends Component {  
+  state = {
+    currentChoices: null,
+    randomMeal: null,
+    dinners: dinners,
+    rating: null,
+    meal:"",
+    ethnicity:"",
+    description:"",
+    image:"",
+    display:false,
+    showModal:false,
+    displayType: "all"
+  }
+
+/* **********  Navbar Methods **************** */
+  chooseRandom = (e) => {
+    e.preventDefault();
+    let randomChoice = dinners[Math.floor(Math.random() * dinners.length)];
+    console.log(randomChoice);
+    let chosenMeal = randomChoice.meal;
+    this.setState({randomMeal:chosenMeal});
+    console.log(chosenMeal);
+  }
+
+   viewAll = (e) => {
+    this.state.dinners.map(dinner => {
+     <DinnerCard 
+      key={dinner.index} 
+      meal={dinner.meal} 
+      description={dinner.description} 
+      image={dinner.image} 
+      ethnicity={dinner.ethnicity} 
+      /> 
+      console.log("button was clicked");
+    });
+  }
+
+
+  handleEthnicityChange = (e, data) => {
+    e.preventDefault
+    console.log(data.value);
+     this.setState({ethnicity: data.value});
+     console.log(this.state.ethnicity);
+
+    }
+
+    updateDisplayType = (displayType) => {
+      console.log(displayType);
+      this.setState({displayType:displayType});
+      console.log("state should be set to:" + displayType);
+    }
+/* **********  Modal Form Related Methods **************** */
+
+
+  change = (e) => {
+      this.setState({
+        [e.target.name]:e.target.value 
+
+      });
+    }
+
+ addNewDinner = (e) => {
+    e.preventDefault
+    let updated = this.state.dinners.slice();
+      const newDinner = {
+        meal: this.state.meal,
+        ethnicity: this.state.ethnicity,
+        description: this.state.description,
+        image:this.state.image,
+        display: false,
+        id: this.state.dinners.length + 1
+      }
+    updated.push(newDinner);
+    this.setState({dinners:updated});
+    console.log("dinners new state:" + {dinners})
+    this.clearForm();
+    this.closeModal();
+  }
+
+  clearForm = () => this.setState({ meal: "", description: "", image:"", ethnicity:"" })
+
+  openModal = () => {
+    this.setState({ showModal: true })
+  }
+
+  closeModal = () => {
+    this.setState({ showModal: false })
+  }
+
+  clickCheck = () => {
+    console.log("This button has been clicked");
+  }
+/* **********  Card Related Methods **************** */
+
+handleRate = (e, { rating, maxRating }) => this.setState({ rating, maxRating });
+
+removeDinner(e, index) {  
+  console.log("remove button clicked")
+  this.setState({
+    dinners: this.state.dinners.filter(function(e,i){
+    return i !== index;
+    })
+  });
+}
+
+
+  render() {
+    const { randomMeal, dinners, currentChoices, meal, ethnicity, description, image, showModal, rating, displayType} = this.state;
     return(
       <div>
-        <Navbar/>
-        <CardBase/>
+        <InfoHeader
+          currentChoices={dinners.length}          
+          randomMeal={randomMeal}
+          chooseRandom={this.chooseRandom}
+          addNewDinner={this.addNewDinner}
+          ethnicity={ethnicity}
+          handleEthnicityChange={this.handleEthnicityChange}
+          viewAll={this.viewAll}
+          change={this.change}
+          openModal={this.openModal}
+          closeModal={this.closeModal}
+          showModal={showModal}
+          updateDisplayType={this.updateDisplayType}
+          clickCheck={this.clickCheck}
+        />
+        <Container>
+          <CardList
+            randomMeal={this.randomMeal}
+            dinners={dinners}
+            handleRate={this.handleRate}
+            rating={rating}
+            removeDinner={this.removeDinner}
+            displayType={displayType}
+          />
+        </Container>
+        <FormStandAlone
+          dinners={dinners}
+          meal={meal}
+          ethnicity={ethnicity}
+          description={description}
+          image={image}
+          change={this.change}
+          onSubmit={null} 
+          addNewDinner={this.addNewDinner}
+          handleEthnicityChange={this.handleEthnicityChange}         
+        />  
       </div>
+
     );
   }
 };
+
 
 
 

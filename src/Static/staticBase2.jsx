@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Menu, Button, Container, Card, Header, Segment, Image, Icon, Label, Grid, Dropdown, Input, Statistic, Flag} from 'semantic-ui-react';
+import { Menu, Button, Container, Card, Header, Segment, Image, Icon, Grid, Dropdown, Statistic } from 'semantic-ui-react';
 
 var dinners = [
   {
@@ -60,7 +60,6 @@ var dinners = [
   }   
 ];
 
-
 class StaticComponents extends Component {
   state = {
     currentDinner: "Chicken Parmesan",
@@ -104,17 +103,11 @@ class StaticComponents extends Component {
     });
   }
 
-
-
-  render(){
-    const { currentDinner, currentChoices, prepTime, randomPick, counter, dinners } = this.state;
+ render(){
+    const {randomPick, counter, dinners } = this.state;
     return (
       <div>
-        <Banner />
         <InfoHeader
-          currentDinner={currentDinner}
-          currentChoices={currentChoices}
-          prepTime={prepTime}
           randomPick={randomPick}
           counter={this.state.counter}
           updateState = {this.updateState}
@@ -129,48 +122,54 @@ class StaticComponents extends Component {
   }
 }
 
+const InfoHeader = () => {
+  return(
+    <Segment.Group raised>
+      <Banner />
+      <Navbar />
+    </Segment.Group>
+    );
+}
 const Banner = () => {
   return (
     <div className="banner">
-     <h1 className="headline"> 
-        <Image size="small" src = '../images/dinnerLogo.jpeg'avatar />
-        What 's For Dinner </h1>
+      <Segment.Group horizontal raised >
+        <Segment>
+          <h1 className="headline"> 
+          <Image size="small" src = '../images/dinnerLogo.jpeg'avatar />
+            What 's For Dinner 
+          </h1>
+        </Segment>
+        <Segment>
+          <Stat />
+        </Segment>
+      </Segment.Group>
     </div>
   );
 }
-const InfoHeader = (props) => {
+
+const Stat = (props) => {
   return (
-  <div className="InfoHeader">
-      <Segment clearing>
-        <Header as = 'h3' floated="left">
-          <Statistic>
-            <Statistic.Value>
-              <Icon name="food" size="tiny"/>            
-              <CurrentChoices
-                currentChoices = {props.currentChoices} 
-              />            
-            </Statistic.Value>
-            <Statistic.Label>Dinner Choices</Statistic.Label>
-          </Statistic>
-        </Header> 
-         <Header as = "h2" floated="right">       
-              <label>
-                Dinner being prepared:
-                <span>  </span>                
-                {props.currentDinner}              
-              </label>
-              <br/>
-              <label>
-              <i className = "hourglass half icon"></i>
-                  Preparation Time:
-                  <span>  </span> 
-                  <PrepTime
-                    prepTime = {props.prepTime}
-                  />
-                  <span> minutes</span>
-              </label>
-          </Header>
-       </Segment>
+    <div className="DinnerTotal" >
+      <Header as = 'h3' floated="right">
+        <Statistic color="orange" >
+          <Statistic.Value>
+            <Icon color = "red" name="food" size="small"/>
+            <span>: </span>            
+            <CurrentChoices
+              currentChoices = {props.currentChoices} 
+            />            
+          </Statistic.Value>
+          <Statistic.Label >Dinner Choices</Statistic.Label>
+        </Statistic>
+      </Header> 
+    </div>
+    );
+}
+const Navbar = (props) => {
+  return (
+  <div className="Navbar">
+
         <Grid columns = { 5 } doubling >
           <Grid.Column >
             <Menu secondary pointing >
@@ -194,18 +193,16 @@ const InfoHeader = (props) => {
                 </Button>
               </Menu.Item>
               <Menu.Item >
-                <Dropdown text = 'Ethnic Choice'
+                <Dropdown text = 'Ethnic Restaurants'
                   icon = 'flag'
                   floating labeled button className = 'icon'>
                   <Dropdown.Menu >
                   <Dropdown.Header content = 'Search for a particular Meal' / >
-
                     <Dropdown.Item label = { { name: 'China', countryCode: 'cn' } } text = 'Mexican' value="Mexican"/ >
                     <Dropdown.Item label = { { color: 'blue', empty: true, circular: true } } text = 'American' / >
                     <Dropdown.Item label = { { color: 'green', empty: true, circular: true } } text = 'Italian' / >
                     <Dropdown.Item label = { { color: 'yellow', empty: true, circular: true } } text = 'Indian' / >
                     <Dropdown.Item label = { { color: 'red', empty: true, circular: true } } text = 'Chinese' / >
-
                   </Dropdown.Menu> 
                 </Dropdown> 
               </Menu.Item> 
@@ -228,18 +225,6 @@ const CurrentChoices =() => {
   );
 }
 
-const CurrentDinner = () => {
-  return(
-    <span>10:46 (coded) </span>
-  );
-}
-const PrepTime = () => {
-  return(
-    <Label.Detail>
-      22 (activated by user choice) 
-    </Label.Detail>
-  );
-}
 
 const RandomPick = (props) => {
   return(
@@ -326,7 +311,6 @@ const Footer = () => {
     </footer>
   );
 }
-
 
 
 export default StaticComponents;

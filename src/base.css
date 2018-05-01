@@ -51,7 +51,7 @@ a {
 }
 
 .main-nav a:hover {
-	color: #61dafb;
+	color: #dc143c;
 }
 
 /* ---- Layout Containers ---- */
@@ -68,7 +68,7 @@ a {
 }
 
 .banner {
-	color: #fff;
+	color: #dc143c;
 	background: #292C34;
 	padding: 3.2em 0;
 	margin-bottom: 48px;
